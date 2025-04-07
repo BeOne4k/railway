@@ -1,0 +1,66 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 10vh;
+    z-index: 1000;
+    width: 100%;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    .headBtn {
+        button {
+          position: relative;
+          background-color: #2E41B5;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          cursor: pointer;
+          border-radius: 4px;
+          overflow: hidden;
+          transition: 0.2s ease-in-out;
+      
+          &:hover {
+            background-color: #3b4fd2;
+          }
+      
+          &.ripple::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            width: 0;
+            height: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: ripple-animation 0.6s linear;
+          }
+
+          @keyframes ripple-animation {
+            0% {
+              width: 0;
+              height: 0;
+              opacity: 1;
+            }
+            100% {
+              width: 300px;
+              height: 300px;
+              opacity: 0;
+            }
+          }
+        }
+      }                 
+}
