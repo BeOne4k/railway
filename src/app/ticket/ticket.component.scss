@@ -1,4 +1,31 @@
 *{
     margin: 0;
     padding: 0;
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+}
+
+.form-sec{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #c0d3fe, white);
+    .textSide{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-left: 9%;
+        width: 70%;
+        span{
+            font-size: 22px;
+            font-weight: 500;
+        }
+        .topic{
+            font-size: 40px;
+        }
+    }
 }

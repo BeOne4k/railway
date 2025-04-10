@@ -14,7 +14,7 @@ export class HeaderComponent {
 
     setTimeout(() => {
       button.classList.remove('ripple');
-    }, 470);
+    }, 520);
   }
 
   @HostListener('window:scroll', [])
