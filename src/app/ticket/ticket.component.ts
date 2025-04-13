@@ -12,7 +12,7 @@ interface Station {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './ticket.component.html',
-  styleUrls: ['./ticket.component.css']
+  styleUrls: ['./ticket.component.scss']
 })
 export class TicketComponent implements OnInit {
   stations: Station[] = [];
@@ -29,18 +29,6 @@ export class TicketComponent implements OnInit {
         next: (data) => {
           this.stations = data;
         },
-        error: (error) => {
-          console.error('error:', error);
-          this.stations = this.getFallbackStations();
-        }
       });
-  }
-
-  private getFallbackStations(): Station[] {
-    return [
-      { id: '1', name: 'Tbilisi' },
-      { id: '2', name: 'Batumi' },
-      { id: '3', name: 'Kutaisi' }
-    ];
   }
 }
