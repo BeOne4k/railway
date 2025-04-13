@@ -5,6 +5,14 @@
     </div>
 
     <div class="dropDwns">
-
+      <select name="from" id="from">
+        <option value="" disabled selected>From</option>
+        <option *ngFor="let station of stations" [value]="station.name">{{station.name}}</option>
+      </select>
+      
+      <select name="to" id="to">
+        <option value="" disabled selected>To</option>
+        <option *ngFor="let station of stations" [value]="station.name">{{ station.name}}</option>
+      </select>
     </div>
 </section>

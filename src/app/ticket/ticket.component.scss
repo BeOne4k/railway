@@ -18,7 +18,6 @@
         display: flex;
         flex-direction: column;
         gap: 5px;
-        margin-left: 9%;
         width: 70%;
         span{
             font-size: 22px;
@@ -27,5 +26,28 @@
         .topic{
             font-size: 40px;
         }
+    }
+    .dropDwns{
+        position: relative;
+        width: 70vw;
+        top: 30vh;
+        height: 15vh;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        select{
+            border-radius: 5px;
+            width: 150px;
+            height: 40px;
+            border-radius: 1px solid black;
+            outline: none;
+            &:hover{
+                background-color: none;
+            }
+        }
+
     }
 }
