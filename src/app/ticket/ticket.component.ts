@@ -38,9 +38,9 @@ export class TicketComponent implements OnInit {
 
   private getFallbackStations(): Station[] {
     return [
-      { id: '1', name: 'Тбилиси' },
-      { id: '2', name: 'Батуми' },
-      { id: '3', name: 'Кутаиси' }
+      { id: '1', name: 'Tbilisi' },
+      { id: '2', name: 'Batumi' },
+      { id: '3', name: 'Kutaisi' }
     ];
   }
 }
