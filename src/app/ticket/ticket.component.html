@@ -5,6 +5,9 @@
     </div>
 
     <div class="dropDwns">
+
+      <div class="tktTopic"><span>Book a train ticket</span></div>
+
       <form action="">
           <select name="from" id="from">
             <option value="" disabled selected>From</option>
@@ -16,12 +19,52 @@
             <option *ngFor="let station of stations" [value]="station.name">{{ station.name}}</option>
           </select>
 
-          <mat-form-field appearance="fill">
+          <mat-form-field class="calendar" appearance="fill">
             <mat-label>Choose a date</mat-label>
             <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" name="travelDate">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
+
+          <mat-form-field class="pass" appearance="fill">
+            <mat-label>Number of passengers</mat-label>
+            <input matInput type="number">
+          </mat-form-field>
+
+          <button class="frmDone" type="button" (click)="addRipple($event)">Find a Train</button>
       </form>
     </div>
+</section>
+
+<section class="paraSec">
+  <div class="imgDiv"><img src="https://railway.stepprojects.ge/assets/img/train/trainticket.png" alt=""></div>
+
+  <div class="txtDiv">
+    <div><h2>Train Tickets</h2></div>
+    <div class="widtDiv"><span>To purchase railway tickets, you will need the personal identification number of each passenger. Please prepare this information in advance.</span></div>
+    
+    <div class="iconsDiv">
+      <div class="paraDiv">
+        <div class="smlImg"><img src="https://railway.stepprojects.ge/assets/img/train/unoffer.png" alt=""></div>
+        <div class="smlTpc"><span>Unlimited offers</span></div>
+      </div>
+
+      <div class="paraDiv">
+        <div class="smlImg"><img src="https://railway.stepprojects.ge/assets/img/train/suppor24.png" alt=""></div>
+        <div class="smlTpc"><span>24/7 support</span></div>
+      </div>
+    </div>
+
+    <div class="iconsDiv">
+      <div class="paraDiv">
+        <div class="smlImg"><img src="https://railway.stepprojects.ge/assets/img/train/secure100.png" alt=""></div>
+        <div class="smlTpc"><span>100% safe</span></div>
+      </div>
+
+      <div class="paraDiv">
+        <div class="smlImg"><img src="https://railway.stepprojects.ge/assets/img/train/truspay.png" alt=""></div>
+        <div class="smlTpc"><span>100% safe payment</span></div>
+      </div>
+    </div>
+  </div>
 </section>

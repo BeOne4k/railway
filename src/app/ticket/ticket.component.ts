@@ -30,6 +30,16 @@ interface Station {
   
 })
 export class TicketComponent implements OnInit {
+
+  addRipple(event: MouseEvent) {
+    const button = event.currentTarget as HTMLElement;
+    button.classList.add('ripple');
+  
+    setTimeout(() => {
+      button.classList.remove('ripple');
+    }, 520);
+  }
+
   stations: Station[] = [];
   selectedDate: Date | null = null;
 

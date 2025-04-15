@@ -29,30 +29,180 @@
     }
     .dropDwns{
         position: relative;
-        width: 70vw;
+        width: 80vw;
         top: 30vh;
-        height: 15vh;
+        height: auto;
         background-color: white;
         border-radius: 10px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
         display: flex;
-        justify-content: space-around;
-        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .tktTopic{
+          margin-left: 4%;
+          margin-top: 20px;
+          span{
+            font-size: 20px;
+            font-weight: 400 !important;
+          }
+        }
         form{
             width: 100%;
             display: flex;
             justify-content: space-around;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 20px;
+            margin-top: 20px;
             select{
                 border-radius: 5px;
-                width: 150px;
-                height: 40px;
+                width: 200px;
+                height: 50px;
                 border-radius: 1px solid black;
                 outline: none;
+                background-color: #E0E2EC;
+                font-size: 15px;
+                font-weight: 300;
+                padding-left: 10px;
                 &:hover{
                     background-color: none;
                 }
             }
+            .calendar{
+                margin-top: 20px;
+                height: 70px;
+                width: 200px;
+                border-radius: 5px;
+            }
+            .pass{
+                width: 200px;
+                height: 70px;
+                margin-top: 20px;
+            }
+            button {
+                position: relative;
+                background-color: #2E41B5;
+                color: white;
+                border: none;
+                height: 50px;
+                width: 150px;
+                cursor: pointer;
+                border-radius: 4px;
+                overflow: hidden;
+                transition: 0.2s ease-in-out;
+                font-size: 15px;
+            
+                &:hover {
+                  background-color: #3b4fd2;
+                }
+            
+                &.ripple::after {
+                  content: '';
+                  position: absolute;
+                  border-radius: 50%;
+                  background-color: rgba(255, 255, 255, 0.6);
+                  width: 0;
+                  height: 0;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  pointer-events: none;
+                  animation: ripple-animation 0.6s linear;
+                }
+      
+                @keyframes ripple-animation {
+                  0% {
+                    width: 0;
+                    height: 0;
+                    opacity: 1;
+                  }
+                  100% {
+                    width: 300px;
+                    height: 300px;
+                    opacity: 0;
+                  }
+                }
+              }
         }
     }
+    input[type='number'] {
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+        }
+      }    
+}
+
+.paraSec{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .imgDiv{
+    width: 50%;
+  }
+  .txtDiv{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .widtDiv{
+      font-size: 20px;
+      max-width: 500px;
+    }
+  .iconsDiv{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    .paraDiv{
+      display: flex;
+      align-items: center;
+      width: 30%;
+    }
+    .smlImg{
+      width: 50px;
+      margin-right: 10px;
+    }
+  }
+  }
+}
+
+@media (max-width: 1470px) {
+
+  .paraSec{
+    .imgDiv{
+      display: none;
+    }
+    .txtDiv{
+      .iconsDiv{
+        .paraDiv{
+          width: 100%;
+        }
+      }
+    }
+  }
+
+}
+
+@media (max-width: 900px) {
+  .form-sec{
+    padding-top: 200px;
+  }
+}
+
+@media (max-width: 800px) {
+  .paraSec{
+    width: 100%;
+    .txtDiv{
+      width: 100%;
+      margin-left: 20px;
+    }
+  }
+}
+
+@media (max-width: 460px) {
+  .paraSec{
+    padding-top: 100px;
+  }
 }
