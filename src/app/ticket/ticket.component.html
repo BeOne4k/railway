@@ -5,14 +5,23 @@
     </div>
 
     <div class="dropDwns">
-      <select name="from" id="from">
-        <option value="" disabled selected>From</option>
-        <option *ngFor="let station of stations" [value]="station.name">{{ station.name}}</option>
-      </select>
-      
-      <select name="to" id="to">
-        <option value="" disabled selected>To</option>
-        <option *ngFor="let station of stations" [value]="station.name">{{ station.name}}</option>
-      </select>
+      <form action="">
+          <select name="from" id="from">
+            <option value="" disabled selected>From</option>
+            <option *ngFor="let station of stations" [value]="station.name">{{ station.name}}</option>
+          </select>
+          
+          <select name="to" id="to">
+            <option value="" disabled selected>To</option>
+            <option *ngFor="let station of stations" [value]="station.name">{{ station.name}}</option>
+          </select>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" name="travelDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+      </form>
     </div>
 </section>

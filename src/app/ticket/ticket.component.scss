@@ -38,16 +38,21 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        select{
-            border-radius: 5px;
-            width: 150px;
-            height: 40px;
-            border-radius: 1px solid black;
-            outline: none;
-            &:hover{
-                background-color: none;
+        form{
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            select{
+                border-radius: 5px;
+                width: 150px;
+                height: 40px;
+                border-radius: 1px solid black;
+                outline: none;
+                &:hover{
+                    background-color: none;
+                }
             }
         }
-
     }
 }
