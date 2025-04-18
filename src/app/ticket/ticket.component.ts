@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-
+import { RouterOutlet } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 interface Station {
   id: string;
@@ -43,7 +44,12 @@ export class TicketComponent implements OnInit {
   stations: Station[] = [];
   selectedDate: Date | null = null;
 
-  constructor(private http: HttpClient) {}
+   constructor(private http: HttpClient, private router: Router) {}
+
+   goToTrains(): void {
+    this.router.navigate(['/trains'])
+   }
+
 
   ngOnInit(): void {
     this.fetchStations();
