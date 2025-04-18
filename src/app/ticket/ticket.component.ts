@@ -46,9 +46,26 @@ export class TicketComponent implements OnInit {
 
    constructor(private http: HttpClient, private router: Router) {}
 
-   goToTrains(): void {
-    this.router.navigate(['/trains'])
-   }
+   getGeorgianDayName(date: Date): string {
+    const days = ['კვირა', 'ორშაბათი', 'სამშაბათი', 'ოთხშაბათი', 'ხუთშაბათი', 'პარასკევი', 'შაბათი'];
+    return days[date.getDay()];
+  }
+
+   fromStation: string = '';
+   toStation: string = ''; 
+
+   goToTrains() {
+    const georgianDay = this.selectedDate ? this.getGeorgianDayName(this.selectedDate) : '';
+    this.router.navigate(['/trains'], {
+      queryParams: {
+        from: this.fromStation,
+        to: this.toStation,
+        date: georgianDay
+      }
+    });
+  }
+  
+  
 
 
   ngOnInit(): void {

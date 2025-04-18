@@ -1,11 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+interface Train {
+  id: number;
+  number: number;
+  from: string;
+  to: string;
+  departure: string;
+  arrive: string;
+  date: string;
+}
 
 @Component({
   selector: 'app-trains',
-  imports: [],
+  standalone: true,
   templateUrl: './trains.component.html',
-  styleUrl: './trains.component.scss'
+  styleUrls: ['./trains.component.scss'],
+  imports: [CommonModule]
 })
-export class TrainsComponent {
+export class TrainsComponent implements OnInit {
+  trains: Train[] = [];
+  filteredTrains: Train[] = [];
 
+  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.http.get<Train[]>('https://railway.stepprojects.ge/api/trains')
+      .subscribe((trains) => {
+        this.trains = trains;
+  
+        this.route.queryParams.subscribe(params => {
+          const from = params['from'];
+          const to = params['to'];
+          const date = params['date'];
+          
+          
+          this.filteredTrains = this.trains.filter(train =>
+            train.from === from &&
+            train.to === to &&
+            train.date === date
+          );
+        });
+      });
+  }
+  
 }

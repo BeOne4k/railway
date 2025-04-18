@@ -1,1 +1,9 @@
-<p>trains works!</p>
+<section class="avTrains">
+    <div *ngFor="let train of filteredTrains" class="train-card">
+      <h3>Train #{{ train.number }}</h3>
+      <p>From: {{ train.from }}</p>
+      <p>To: {{ train.to }}</p>
+      <p>Departure: {{ train.departure }}</p>
+      <p>Arrival: {{ train.arrive }}</p>
+    </div>
+  </section>

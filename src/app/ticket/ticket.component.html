@@ -9,12 +9,12 @@
       <div class="tktTopic"><span>Book a train ticket</span></div>
 
       <form action="">
-          <select name="from" id="from">
+          <select name="from" id="from" [(ngModel)]="fromStation">
             <option value="" disabled selected>From</option>
             <option *ngFor="let station of stations" [value]="station.name">{{ station.name}}</option>
           </select>
           
-          <select name="to" id="to">
+          <select name="to" id="to" [(ngModel)]="toStation">
             <option value="" disabled selected>To</option>
             <option *ngFor="let station of stations" [value]="station.name">{{ station.name}}</option>
           </select>
