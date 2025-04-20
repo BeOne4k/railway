@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface Train {
   id: number;
@@ -34,7 +35,15 @@ export class TrainsComponent implements OnInit {
   trains: Train[] = [];
   filteredTrains: Train[] = [];
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {}
+
+  goToFormPage(train: Train) {
+    console.log('Selected Train:', train);
+    this.router.navigate(['/form'], {
+      state: { selectedTrain: train }
+    });
+  }
+  
 
   ngOnInit() {
     this.http.get<Train[]>('https://railway.stepprojects.ge/api/trains')
