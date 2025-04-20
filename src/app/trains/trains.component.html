@@ -1,9 +1,43 @@
 <section class="avTrains">
-    <div *ngFor="let train of filteredTrains" class="train-card">
-      <h3>Train #{{ train.number }}</h3>
-      <p>From: {{ train.from }}</p>
-      <p>To: {{ train.to }}</p>
-      <p>Departure: {{ train.departure }}</p>
-      <p>Arrival: {{ train.arrive }}</p>
+
+  <div class="blue">
+    <h1>Select the Train That Suits You Best</h1>
+  </div>
+
+  <div class="mainTkt">
+    <div class="listTxt">
+      <span>List of Available Trains</span>
     </div>
-  </section>
+
+    <div class="trinsSch">
+      <div class="trainTopic">
+        <div>
+          <span>Train</span>
+        </div>
+        <div>
+          <span>Departs</span>
+        </div>
+        <div>
+          <span>Arrives</span>
+        </div>
+      </div>
+      <div *ngFor="let train of filteredTrains" class="train-card">
+        <div>
+          <h3>#{{ train.number }}</h3>
+        </div>
+        <div>
+          <span>{{ train.from }}</span>
+          <span>{{ train.departure }}</span>
+        </div>
+        <div>
+          <span>{{ train.to }}</span>
+          <span>{{ train.arrive }}</span>
+        </div>
+        <div>
+          <button (mouseover)="addRipple($event)">Book now </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>

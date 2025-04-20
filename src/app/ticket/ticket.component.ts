@@ -52,7 +52,8 @@ export class TicketComponent implements OnInit {
   }
 
    fromStation: string = '';
-   toStation: string = ''; 
+   toStation: string = '';
+   today: Date = new Date(); 
 
    goToTrains() {
     const georgianDay = this.selectedDate ? this.getGeorgianDayName(this.selectedDate) : '';
@@ -64,8 +65,6 @@ export class TicketComponent implements OnInit {
       }
     });
   }
-  
-  
 
 
   ngOnInit(): void {

@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,6 +9,11 @@ import { RouterOutlet } from '@angular/router';
 })
 export class HeaderComponent {
 
+  constructor(private router: Router) {}
+
+  goToHome() {
+    this.router.navigate(['/']);
+  }
 
   addRipple(event: MouseEvent) {
     const button = event.currentTarget as HTMLElement;
@@ -21,11 +27,19 @@ export class HeaderComponent {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const header = document.querySelector('header') as HTMLElement;
+    if (!header) return;
 
-    if (window.scrollY > 1) {
-      header.style.backgroundColor = 'white';
+    const currentUrl = this.router.url;
+
+    if (currentUrl === '/ticket') {
+      if (window.scrollY > 1) {
+        header.style.backgroundColor = 'white';
+      } else {
+        header.style.backgroundColor = 'transparent';
+      }
     } else {
-      header.style.backgroundColor = 'transparent';
+      // Всегда белый фон для остальных страниц
+      header.style.backgroundColor = 'white';
     }
   }
 }

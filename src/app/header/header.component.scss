@@ -18,8 +18,13 @@ header{
     height: 10vh;
     z-index: 1000;
     width: 100%;
-    background-color: transparent;
+    background-color: white;
     transition: background-color 0.3s ease;
+    .name{
+      h1{
+        cursor: pointer;
+      }
+    }
     .headBtn {
         button {
           position: relative;

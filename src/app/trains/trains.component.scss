@@ -1,0 +1,134 @@
+.avTrains{
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+    margin-bottom: 40px;
+    .blue{
+        background-color: #2840BF;
+        color: white;
+        height: 40vh;
+        display: flex;
+        align-items: center;
+        padding-left: 14.5%;
+        font-size: 25px;
+        padding-top: 3%;
+        padding-right: 14.5%;
+    }
+    .mainTkt{
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+        .listTxt{
+            font-size: 35px;
+        }
+        .trinsSch{
+            display: flex;
+            flex-direction: column;
+            width: 70%;
+            gap: 20px;
+
+            @media (max-width: 800px) {
+              min-width: 600px;
+              overflow-x: auto;
+            }
+
+            @media (max-width: 600px) {
+              min-width: 500px;
+              overflow-x: auto;
+            }
+
+            @media (max-width: 510px) {
+              min-width: 400px;
+              overflow-x: auto;
+            }
+
+            .trainTopic{
+                height: 50px;
+                border: 1px solid #D5DAF0;
+                width: 102.1%;
+                display: flex;
+                align-items: center;
+                padding-left: 30px;
+
+                > div:nth-child(1),
+                > div:nth-child(2) {
+                  flex: 0 0 24%;
+                }
+
+                > div:nth-child(3) {
+                  padding-left: 1.5%;
+                }
+            }
+            .train-card{
+                display: flex;
+                flex-direction: row;
+                gap: 30px;
+                height: 100px;
+                justify-content: space-between;
+                background-color: #F4F6FC;
+                padding-left: 30px;
+                padding-right: 30px;
+                width: 100%;
+                > div:nth-child(4) {
+                  border: none !important;
+                }
+                div{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    border-right: 1px dashed #E0E3F5;
+                    padding-right: 30px;
+                    width: 25%;
+                    
+                    button {
+                        position: relative;
+                        background-color: #2E41B5;
+                        color: white;
+                        border: none;
+                        padding: 10px 20px;
+                        cursor: pointer;
+                        border-radius: 4px;
+                        overflow: hidden;
+                        transition: 0.2s ease-in-out;
+                        width: 100px;
+                    
+                        &:hover {
+                          background-color: #3b4fd2;
+                        }
+                    
+                        &.ripple::after {
+                          content: '';
+                          position: absolute;
+                          border-radius: 50%;
+                          background-color: rgba(255, 255, 255, 0.6);
+                          width: 0;
+                          height: 0;
+                          top: 50%;
+                          left: 50%;
+                          transform: translate(-50%, -50%);
+                          pointer-events: none;
+                          animation: ripple-animation 0.6s linear;
+                        }
+              
+                        @keyframes ripple-animation {
+                          0% {
+                            width: 0;
+                            height: 0;
+                            opacity: 1;
+                          }
+                          100% {
+                            width: 300px;
+                            height: 300px;
+                            opacity: 0;
+                          }
+                        }
+                      }
+                }
+            }
+        }
+    }
+}
