@@ -95,6 +95,10 @@
                         overflow: hidden;
                         transition: 0.2s ease-in-out;
                         width: 100px;
+                        
+                        @media (max-width: 510px) {
+                          width: 70px;
+                        }
                     
                         &:hover {
                           background-color: #3b4fd2;
@@ -132,3 +136,5 @@
         }
     }
 }
+
+

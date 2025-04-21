@@ -32,13 +32,12 @@ export class HeaderComponent {
     const currentUrl = this.router.url;
 
     if (currentUrl === '/ticket') {
-      if (window.scrollY > 1) {
+      if (window.scrollY > 5) {
         header.style.backgroundColor = 'white';
       } else {
         header.style.backgroundColor = 'transparent';
       }
     } else {
-      // Всегда белый фон для остальных страниц
       header.style.backgroundColor = 'white';
     }
   }

@@ -1,3 +1,70 @@
+.topicSec{
+    height: 35vh;
+    background-color: #2840BF;
+    display: flex;
+    align-items: center;
+    color: white;
+    padding-left: 15%;
+    div{
+        margin-top: 5%;
+    }
+}
+
 .buyForm{
-    margin-top: 100px;
+    margin-top: 3%;
+    width: 100vw; 
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    margin-bottom: 5vh; 
+    .formMain{
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        .selectedTrain{
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            height: 100px;
+            background-color: #F4F6FC;
+            padding-left: 5px;
+            width: 100%;
+            > div:nth-child(1){
+                margin-left: 10px;
+            }
+
+            > div:nth-child(2),
+            > div:nth-child(1) {
+                width: 40%;
+              }
+            > div:nth-child(3) {
+              border: none !important;
+              width: 10%;
+            }
+
+            div{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                border-right: 1px dashed #E0E3F5;
+                width: 25%;
+            }
+        }
+    }
+    .line {
+        border-bottom: none;
+        height: 2px;
+        width: 100%;
+        background-image: repeating-linear-gradient(
+          to right,
+          #D5DAF0,
+          #D5DAF0 5px,   // длина чёрточки
+          transparent 10px,
+          transparent 15px  // расстояние между чёрточками
+        );
+      }
 }

@@ -1,19 +1,31 @@
+<section class="topicSec">
+  <div><h2>Passenger Information</h2></div>
+</section>
+
 <section class="buyForm">
-  <div class="txt">
-    <h3>Enter your information</h3> 
+
+  <div class="formMain">
+
+    <div class="txt">
+      <h3>Enter your details</h3> 
+    </div>
+
+    <div class="selectedTrain" *ngIf="selectedTrain">
+      <div>
+        <h3>#{{ selectedTrain.number }}</h3>
+      </div>
+      <div>
+        <span>{{ selectedTrain.from }}</span>
+        <span>{{ selectedTrain.departure }}</span>
+      </div>
+      <div>
+        <span>{{ selectedTrain.to }}</span>
+        <span>{{ selectedTrain.arrive }}</span>
+      </div>
+    </div>
+
+    <div class="line"></div>
+
   </div>
 
-  <div class="selectedTrain" *ngIf="selectedTrain">
-    <div>
-      <h3>#{{ selectedTrain.number }}</h3>
-    </div>
-    <div>
-      <span>{{ selectedTrain.from }}</span>
-      <span>{{ selectedTrain.departure }}</span>
-    </div>
-    <div>
-      <span>{{ selectedTrain.to }}</span>
-      <span>{{ selectedTrain.arrive }}</span>
-    </div>
-  </div>
 </section>
