@@ -26,6 +26,44 @@
 
     <div class="line"></div>
 
+    <form action="">
+
+      <h2>Contact Information</h2>
+
+      <div class="email">
+        <input type="email" placeholder="Enter Your Email">
+        <input type="text" placeholder="Enter Your Telephone Number">
+      </div>
+
+      <h2>Passenger Information</h2>
+
+      <div class="Passenger">
+        <div *ngFor="let passenger of passengersArray; let i = index" class="passenger-form">
+          <h3>Passenger {{i + 1}}</h3>
+          
+          <div class="passenger-inputs">
+            <mat-form-field appearance="fill">
+              <mat-label>First Name</mat-label>
+              <input matInput type="text" [(ngModel)]="passenger.firstName" name="firstName_{{i}}">
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>Last Name</mat-label>
+              <input matInput type="text" [(ngModel)]="passenger.lastName" name="lastName_{{i}}">
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>Id Number</mat-label>
+              <input matInput type="number" [(ngModel)]="passenger.age" name="age_{{i}}" min="1" max="120">
+            </mat-form-field>
+      
+            <button>choose seat</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
   </div>
 
 </section>
+

@@ -55,16 +55,22 @@ export class TicketComponent implements OnInit {
    toStation: string = '';
    today: Date = new Date(); 
 
+   passengerCount!: number;
+
    goToTrains() {
     const georgianDay = this.selectedDate ? this.getGeorgianDayName(this.selectedDate) : '';
+  
     this.router.navigate(['/trains'], {
       queryParams: {
         from: this.fromStation,
         to: this.toStation,
         date: georgianDay
+      },
+      state: {
+        passengerCount: this.passengerCount
       }
     });
-  }
+   }
 
 
   ngOnInit(): void {

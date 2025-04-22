@@ -28,7 +28,7 @@
 
           <mat-form-field class="pass" appearance="fill">
             <mat-label>Number of passengers</mat-label>
-            <input matInput type="number">
+            <input matInput type="number" [(ngModel)]="passengerCount" name="passengerCount">
           </mat-form-field>
 
           <button class="frmDone" type="button" (mouseover)="addRipple($event)"  (click)="goToTrains()">Find a Train</button>

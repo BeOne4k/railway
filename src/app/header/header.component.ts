@@ -32,7 +32,7 @@ export class HeaderComponent {
     const currentUrl = this.router.url;
 
     if (currentUrl === '/ticket') {
-      if (window.scrollY > 5) {
+      if (window.scrollY > 1) {
         header.style.backgroundColor = 'white';
       } else {
         header.style.backgroundColor = 'transparent';

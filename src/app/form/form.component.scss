@@ -54,6 +54,27 @@
                 width: 25%;
             }
         }
+        form{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            .email{
+                margin-top: 40px;
+                padding-bottom: 25px;
+                width: 100%;
+                display: flex;
+                gap: 10px;
+                input{
+                    height: 35px;
+                    padding: 10px;
+                    padding-left: 15px;
+                    outline: none;
+                    border: 1px solid rgb(185, 185, 185);
+                    border-radius: 5px;
+                    width: 50%;
+                }
+            }
+        }
     }
     .line {
         border-bottom: none;

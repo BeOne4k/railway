@@ -39,8 +39,11 @@ export class TrainsComponent implements OnInit {
 
   goToFormPage(train: Train) {
     console.log('Selected Train:', train);
+    const passengerCount = this.router.getCurrentNavigation()?.extras.state?.['passengerCount'] || 1;
     this.router.navigate(['/form'], {
-      state: { selectedTrain: train }
+      state: { selectedTrain: train,
+              passengerCount: passengerCount
+       }
     });
   }
   
