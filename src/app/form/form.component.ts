@@ -28,27 +28,16 @@ export class FormComponent {
     if (state) {
       this.selectedTrain = state.selectedTrain;
       this.passengerCount = state.passengerCount
-  
-      this.passengersArray = Array(this.passengerCount).fill(0).map((_, i) => ({
-        id: i + 1,
-        firstName: '',
-        lastName: '',
-        age: null
-      }));
-    } else {
-      this.selectedTrain = null;
-      this.passengersArray = Array(this.passengerCount).fill(0).map((_, i) => ({
-        id: i + 1,
-        firstName: '',
-        lastName: '',
-        age: null
-      }));
     }
   
-    console.log('Selected Train:', this.selectedTrain);
-    console.log('Passenger Count:', this.passengerCount);
   }
-  onPassengerAction(index: number) {
-    console.log('Passenger action:', this.passengersArray[index]);
+
+  ngOnInit(): void {
+    this.passengersArray = Array.from({ length: this.passengerCount }, (_, i) => ({
+      firstName: '',
+      lastName: '',
+      passportNumber: ''
+    }));
   }
+  
 }

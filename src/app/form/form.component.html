@@ -37,30 +37,16 @@
 
       <h2>Passenger Information</h2>
 
-      <div class="Passenger">
-        <div *ngFor="let passenger of passengersArray; let i = index" class="passenger-form">
-          <h3>Passenger {{i + 1}}</h3>
-          
-          <div class="passenger-inputs">
-            <mat-form-field appearance="fill">
-              <mat-label>First Name</mat-label>
-              <input matInput type="text" [(ngModel)]="passenger.firstName" name="firstName_{{i}}">
-            </mat-form-field>
-      
-            <mat-form-field appearance="fill">
-              <mat-label>Last Name</mat-label>
-              <input matInput type="text" [(ngModel)]="passenger.lastName" name="lastName_{{i}}">
-            </mat-form-field>
-      
-            <mat-form-field appearance="fill">
-              <mat-label>Id Number</mat-label>
-              <input matInput type="number" [(ngModel)]="passenger.age" name="age_{{i}}" min="1" max="120">
-            </mat-form-field>
-      
-            <button>choose seat</button>
-          </div>
+      <div class="passengers">
+        <div class="passenger" *ngFor="let passenger of passengersArray; let i = index">
+          <h4>Passenger {{ i + 1 }}</h4>
+          <input type="text" [(ngModel)]="passenger.firstName" name="firstName{{i}}" placeholder="First Name">
+          <input type="text" [(ngModel)]="passenger.lastName" name="lastName{{i}}" placeholder="Last Name">
+          <input type="text" [(ngModel)]="passenger.passportNumber" name="passport{{i}}" placeholder="Passport Number">
+          <button>Select Your Seat</button>
         </div>
       </div>
+      
     </form>
 
   </div>

@@ -58,16 +58,15 @@ export class TicketComponent implements OnInit {
    passengerCount!: number;
 
    goToTrains() {
+    console.log(this.passengerCount)
     const georgianDay = this.selectedDate ? this.getGeorgianDayName(this.selectedDate) : '';
   
     this.router.navigate(['/trains'], {
       queryParams: {
         from: this.fromStation,
         to: this.toStation,
-        date: georgianDay
-      },
-      state: {
-        passengerCount: this.passengerCount
+        date: georgianDay,
+        passengers: this.passengerCount
       }
     });
    }

@@ -39,14 +39,15 @@ export class TrainsComponent implements OnInit {
 
   goToFormPage(train: Train) {
     console.log('Selected Train:', train);
-    const passengerCount = this.router.getCurrentNavigation()?.extras.state?.['passengerCount'] || 1;
+    const passengerCount = this.router.getCurrentNavigation()?.extras.state?.['passengerCount'];
     this.router.navigate(['/form'], {
       state: { selectedTrain: train,
-              passengerCount: passengerCount
+                passengerCount: this.passengerCount
        }
     });
   }
   
+  passengerCount: number = 1;
 
   ngOnInit() {
     this.http.get<Train[]>('https://railway.stepprojects.ge/api/trains')
@@ -57,6 +58,7 @@ export class TrainsComponent implements OnInit {
           const from = params['from'];
           const to = params['to'];
           const date = params['date'];
+          const pass = params['passengers']
           
           
           this.filteredTrains = this.trains.filter(train =>
@@ -64,6 +66,8 @@ export class TrainsComponent implements OnInit {
             train.to === to &&
             train.date === date
           );
+
+          this.passengerCount = pass;
         });
       });
   }
