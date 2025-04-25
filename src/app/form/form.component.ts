@@ -39,5 +39,40 @@ export class FormComponent {
       passportNumber: ''
     }));
   }
+
+  addRipple(event: MouseEvent) {
+    const button = event.currentTarget as HTMLElement;
+    button.classList.add('ripple');
+
+    setTimeout(() => {
+      button.classList.remove('ripple');
+    }, 520);
+  }
   
+
+  showVagons = false;
+
+openVagons() {
+  this.showVagons = true;
+}
+
+closeVagons() {
+  this.showVagons = false;
+}
+
+getVagonImage(index: number): string {
+  const total = this.selectedTrain?.vagons?.length || 0;
+
+  if (index === 0) {
+    return 'https://railway.stepprojects.ge/images/firstWagon.png';
+  } else if (index === total - 1) {
+    return 'https://railway.stepprojects.ge/images/lastWagon.png';
+  } else {
+    return 'https://railway.stepprojects.ge/images/midWagon.png';
+  }
+}
+
+
+
+
 }
