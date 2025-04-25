@@ -45,7 +45,7 @@
             <input type="text" [(ngModel)]="passenger.firstName" name="firstName{{i}}" placeholder="First Name">
             <input type="text" [(ngModel)]="passenger.lastName" name="lastName{{i}}" placeholder="Last Name">
             <input type="text" [(ngModel)]="passenger.passportNumber" name="passport{{i}}" placeholder="Passport Number">
-            <button (mouseover)="addRipple($event)" (click)="openVagons()">Select Your Seat</button>
+            <button (mouseover)="addRipple($event)" (click)="openVagons(i)">Select Your Seat</button>
           </div>
         </div>
       </div>
@@ -60,30 +60,76 @@
           <h3>Choose your vagon</h3>
       
           <div class="allVags">
-            <div class="vagon" *ngFor="let vagon of selectedTrain?.vagons; let i = index" (click)="selectVagon(i)">
+            <div
+              class="vagon"
+              *ngFor="let vagon of selectedTrain?.vagons; let i = index"
+              [class.selected]="selectedVagonIndex === i"
+              (click)="selectVagon(i)"
+            >
               <span class="vagon-name">{{ vagon.name }}</span>
               <img [src]="getVagonImage(i)" alt="Wagon">
             </div>
           </div>
       
           <div class="seats" *ngIf="selectedVagonIndex !== null">
+            <h4 class="vagon-title">
+              Selected Vagon: {{ selectedTrain?.vagons[selectedVagonIndex]?.name }}
+            </h4>
             <div class="seat-row" *ngFor="let row of seatRows">
               <div class="seat-block">
-                <button class="seat-btn">{{ row }}A</button>
-                <button class="seat-btn">{{ row }}B</button>
+                <button
+                  class="seat-btn"
+                  [ngClass]="{
+                    'selected-seat': activePassengerIndex !== null && passengersArray[activePassengerIndex]?.selectedSeat?.vagonIndex === selectedVagonIndex && passengersArray[activePassengerIndex]?.selectedSeat?.seat === (row + 'A'),
+                    'taken-seat': isSeatTaken(row + 'A')
+                  }"
+                  [disabled]="isSeatTaken(row + 'A')"
+                  (click)="selectSeat(row + 'A')"
+                >
+                  {{ row }}A
+                </button>
+                <button
+                  class="seat-btn"
+                  [ngClass]="{
+                    'selected-seat': activePassengerIndex !== null && passengersArray[activePassengerIndex]?.selectedSeat?.vagonIndex === selectedVagonIndex && passengersArray[activePassengerIndex]?.selectedSeat?.seat === (row + 'B'),
+                    'taken-seat': isSeatTaken(row + 'B')
+                  }"
+                  [disabled]="isSeatTaken(row + 'B')"
+                  (click)="selectSeat(row + 'B')"
+                >
+                  {{ row }}B
+                </button>
               </div>
-          
-              <div class="aisle"></div>
-          
               <div class="seat-block">
-                <button class="seat-btn">{{ row }}C</button>
-                <button class="seat-btn">{{ row }}D</button>
+                <button
+                  class="seat-btn"
+                  [ngClass]="{
+                    'selected-seat': activePassengerIndex !== null && passengersArray[activePassengerIndex]?.selectedSeat?.vagonIndex === selectedVagonIndex && passengersArray[activePassengerIndex]?.selectedSeat?.seat === (row + 'C'),
+                    'taken-seat': isSeatTaken(row + 'C')
+                  }"
+                  [disabled]="isSeatTaken(row + 'C')"
+                  (click)="selectSeat(row + 'C')"
+                >
+                  {{ row }}C
+                </button>
+                <button
+                  class="seat-btn"
+                  [ngClass]="{
+                    'selected-seat': activePassengerIndex !== null && passengersArray[activePassengerIndex]?.selectedSeat?.vagonIndex === selectedVagonIndex && passengersArray[activePassengerIndex]?.selectedSeat?.seat === (row + 'D'),
+                    'taken-seat': isSeatTaken(row + 'D')
+                  }"
+                  [disabled]="isSeatTaken(row + 'D')"
+                  (click)="selectSeat(row + 'D')"
+                >
+                  {{ row }}D
+                </button>
               </div>
             </div>
           </div>
-          
+      
         </div>
       </div>
+      
       
       
       

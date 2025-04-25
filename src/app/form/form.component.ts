@@ -13,10 +13,14 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./form.component.scss'],
   standalone: true
 })
-export class FormComponent {
+export class FormComponent implements OnInit {
   selectedTrain: any;
   passengerCount: number = 1;
   passengersArray: any[] = [];
+  activePassengerIndex: number | null = null;
+  showVagons = false;
+  selectedVagonIndex: number | null = null;
+  seatRows: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   constructor(private router: Router) {
     const navigation = this.router.getCurrentNavigation();
@@ -24,19 +28,19 @@ export class FormComponent {
       selectedTrain: any,
       passengerCount: number
     };
-  
+
     if (state) {
       this.selectedTrain = state.selectedTrain;
       this.passengerCount = state.passengerCount
     }
-  
   }
 
   ngOnInit(): void {
-    this.passengersArray = Array.from({ length: this.passengerCount }, (_, i) => ({
+    this.passengersArray = Array.from({ length: this.passengerCount }, () => ({
       firstName: '',
       lastName: '',
-      passportNumber: ''
+      passportNumber: '',
+      selectedSeat: { vagonIndex: null, seat: null }, // Изменено на объект
     }));
   }
 
@@ -48,47 +52,51 @@ export class FormComponent {
       button.classList.remove('ripple');
     }, 520);
   }
-  
 
-  showVagons = false;
-
-openVagons() {
-  this.showVagons = true;
-}
-
-closeVagons() {
-  this.showVagons = false;
-  this.selectedVagonIndex = null;
-}
-
-getVagonImage(index: number): string {
-  const total = this.selectedTrain?.vagons?.length || 0;
-
-  if (index === 0) {
-    return 'https://railway.stepprojects.ge/images/firstWagon.png';
-  } else if (index === total - 1) {
-    return 'https://railway.stepprojects.ge/images/lastWagon.png';
-  } else {
-    return 'https://railway.stepprojects.ge/images/midWagon.png';
+  openVagons(index: number) {
+    this.activePassengerIndex = index;
+    this.selectedVagonIndex = this.passengersArray[index].selectedSeat?.vagonIndex; // Получаем индекс вагона
+    this.showVagons = true;
   }
-}
 
-selectedVagonIndex: number | null = null;
+  closeVagons() {
+    this.showVagons = false;
+    this.selectedVagonIndex = null;
+  }
 
-leftSeats: string[] = [
-  '1A', '1B', '2A', '2B', '3A', '3B', '4A', '4B', '5A', '5B',
-  '6A', '6B', '7A', '7B', '8A', '8B', '9A', '9B', '10A', '10B'
-];
-rightSeats: string[] = [
-  '1C', '1D', '2C', '2D', '3C', '3D', '4C', '4D', '5C', '5D',
-  '6C', '6D', '7C', '7D', '8C', '8D', '9C', '9D', '10C', '10D'
-];
+  getVagonImage(index: number): string {
+    const total = this.selectedTrain?.vagons?.length || 0;
 
-seatRows: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    if (index === 0) {
+      return 'https://railway.stepprojects.ge/images/firstWagon.png';
+    } else if (index === total - 1) {
+      return 'https://railway.stepprojects.ge/images/lastWagon.png';
+    } else {
+      return 'https://railway.stepprojects.ge/images/midWagon.png';
+    }
+  }
 
+  selectVagon(index: number) {
+    this.selectedVagonIndex = index;
+  }
 
-selectVagon(index: number) {
-  this.selectedVagonIndex = index;
-}
+  selectSeat(seat: string) {
+    if (this.isSeatTaken(seat)) return;
 
+    if (this.activePassengerIndex !== null && this.selectedVagonIndex !== null) {
+      this.passengersArray[this.activePassengerIndex].selectedSeat = {
+        vagonIndex: this.selectedVagonIndex,
+        seat: seat
+      };
+    }
+  }
+
+  isSeatTaken(seat: string): boolean {
+    return this.passengersArray.some(
+      (p, idx) =>
+        idx !== this.activePassengerIndex &&
+        p.selectedSeat?.vagonIndex === this.selectedVagonIndex &&
+        p.selectedSeat?.seat === seat
+    );
+  }
 }
