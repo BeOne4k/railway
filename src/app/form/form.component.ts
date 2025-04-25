@@ -58,6 +58,7 @@ openVagons() {
 
 closeVagons() {
   this.showVagons = false;
+  this.selectedVagonIndex = null;
 }
 
 getVagonImage(index: number): string {
@@ -72,7 +73,22 @@ getVagonImage(index: number): string {
   }
 }
 
+selectedVagonIndex: number | null = null;
+
+leftSeats: string[] = [
+  '1A', '1B', '2A', '2B', '3A', '3B', '4A', '4B', '5A', '5B',
+  '6A', '6B', '7A', '7B', '8A', '8B', '9A', '9B', '10A', '10B'
+];
+rightSeats: string[] = [
+  '1C', '1D', '2C', '2D', '3C', '3D', '4C', '4D', '5C', '5D',
+  '6C', '6D', '7C', '7D', '8C', '8D', '9C', '9D', '10C', '10D'
+];
+
+seatRows: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 
+selectVagon(index: number) {
+  this.selectedVagonIndex = index;
+}
 
 }

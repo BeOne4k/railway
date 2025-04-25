@@ -39,24 +39,63 @@
             align-items: center;
             color: white;
             .chooseVag{
+              border-radius: 10px;
               background-color: white;
               width: 50%;
-              height: 30%;
+              height: auto;
               z-index: 200;
               display: flex;
               align-items: center;
-              justify-content: center;
               flex-direction: column;
               gap: 5px;
               padding-left: 15px;
               padding-right: 15px;
               color: black;
+              .seats {
+                padding-bottom: 20px;
+                margin-top: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+              
+                .seat-row {
+                  display: flex;
+                  gap: 30px;
+                  align-items: center;
+                  justify-content: center;
+                }
+              
+                .seat-block {
+                  display: flex;
+                  gap: 10px;
+                }
+              
+                .seat-btn {
+                  background-color: #b2d235;
+                  border: none;
+                  width: 40px;
+                  height: 30px;
+                  border-radius: 6px;
+                  font-weight: bold;
+                  cursor: pointer;
+                  transition: 0.2s;
+              
+                  &:hover {
+                    background-color: #a0c22b;
+                  }
+                }
+              }
+              
+              
+              
                 .CloseBtn{
                   width: 100%;
+                  display: flex;
+                  align-items: flex-start;
+                  justify-content: flex-end;
                   .close-btn {
-                    position: absolute;
-                    left: 74%;
-                    bottom: 61%;
+                    margin-top: 10px;
                     background: transparent;
                     border: none;
                     font-size: 24px;

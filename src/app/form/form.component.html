@@ -52,18 +52,40 @@
 
       <div class="vagons" *ngIf="showVagons" (click)="closeVagons()">
         <div class="chooseVag" (click)="$event.stopPropagation()">
+      
           <div class="CloseBtn">
             <button class="close-btn" (click)="closeVagons()">&times;</button>
           </div>
+      
           <h3>Choose your vagon</h3>
+      
           <div class="allVags">
-            <div class="vagon" *ngFor="let vagon of selectedTrain?.vagons; let i = index">
+            <div class="vagon" *ngFor="let vagon of selectedTrain?.vagons; let i = index" (click)="selectVagon(i)">
               <span class="vagon-name">{{ vagon.name }}</span>
               <img [src]="getVagonImage(i)" alt="Wagon">
             </div>
           </div>
+      
+          <div class="seats" *ngIf="selectedVagonIndex !== null">
+            <div class="seat-row" *ngFor="let row of seatRows">
+              <div class="seat-block">
+                <button class="seat-btn">{{ row }}A</button>
+                <button class="seat-btn">{{ row }}B</button>
+              </div>
+          
+              <div class="aisle"></div>
+          
+              <div class="seat-block">
+                <button class="seat-btn">{{ row }}C</button>
+                <button class="seat-btn">{{ row }}D</button>
+              </div>
+            </div>
+          </div>
+          
         </div>
       </div>
+      
+      
       
       
     </form>
