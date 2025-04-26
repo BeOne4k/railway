@@ -26,6 +26,10 @@
 
     <div class="line"></div>
 
+    <div class="error" #errorDiv>
+      <h2>*Please fill the form below</h2>
+    </div>
+
     <form action="">
 
       <h2>Contact Information</h2>
@@ -41,10 +45,25 @@
         <div class="passenger" *ngFor="let passenger of passengersArray; let i = index">
           <h4>Passenger {{ i + 1 }}</h4>
           <div class="inputs">
-            <div><p>Seat:</p></div>
+            <div>
+              <p>
+                Seat:
+                {{
+                  passenger.selectedSeat?.seat
+                    ? passenger.selectedSeat.seat
+                    : 'Not selected'
+                }}
+                <br *ngIf="passenger.selectedSeat?.seat">
+                {{
+                  passenger.selectedSeat?.seat
+                    ? selectedTrain.vagons[passenger.selectedSeat.vagonIndex]?.name
+                    : ''
+                }}
+              </p>
+            </div>
             <input type="text" [(ngModel)]="passenger.firstName" name="firstName{{i}}" placeholder="First Name">
             <input type="text" [(ngModel)]="passenger.lastName" name="lastName{{i}}" placeholder="Last Name">
-            <input type="text" [(ngModel)]="passenger.passportNumber" name="passport{{i}}" placeholder="Passport Number">
+            <input type="text" [(ngModel)]="passenger.passportNumber" name="passport{{i}}" placeholder="ID Number">
             <button (mouseover)="addRipple($event)" (click)="openVagons(i)">Select Your Seat</button>
           </div>
         </div>
@@ -52,13 +71,13 @@
 
       <div class="vagons" *ngIf="showVagons" (click)="closeVagons()">
         <div class="chooseVag" (click)="$event.stopPropagation()">
-      
+
           <div class="CloseBtn">
             <button class="close-btn" (click)="closeVagons()">&times;</button>
           </div>
-      
+
           <h3>Choose your vagon</h3>
-      
+
           <div class="allVags">
             <div
               class="vagon"
@@ -70,7 +89,7 @@
               <img [src]="getVagonImage(i)" alt="Wagon">
             </div>
           </div>
-      
+
           <div class="seats" *ngIf="selectedVagonIndex !== null">
             <h4 class="vagon-title">
               Selected Vagon: {{ selectedTrain?.vagons[selectedVagonIndex]?.name }}
@@ -126,14 +145,11 @@
               </div>
             </div>
           </div>
-      
+
         </div>
       </div>
-      
-      
-      
-      
-      
+
+
     </form>
 
     <div class="includes">
@@ -179,6 +195,33 @@
     <div class="line"></div>
 
   </div>
+
+  <div class="invoice">
+    <h3>Invoice</h3>
+    <div class="seatPrice">
+      <div>
+        <p>Seat</p>
+        <p>Price</p>
+      </div>
+
+      <div class="smlLine"></div>
+
+      <ng-container *ngFor="let passenger of passengersArray">
+        <div class="choosenSeat" *ngIf="passenger.selectedSeat?.seat">
+          <p class="chsSeat">{{ passenger.selectedSeat.seat }}</p>
+          <p class="seatPrc">{{ passenger.selectedSeat.price }} ₾</p>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="total">
+      <p>Total:</p>
+      <p>{{ calculateTotal() }} ₾</p>
+    </div>
+
+    <button (mouseover)="addRipple($event)" (click)="proceedToPayment()">Proceed to Payment</button>
+  </div>
+
 
 </section>
 
