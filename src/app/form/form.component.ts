@@ -1,11 +1,27 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { ChangeDetectorRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+interface Seat {
+  seatId: string;
+  number: string;
+  price: number;
+  isOccupied: boolean;
+  vagonId: number;
+}
+
+interface Vagon {
+  id: number;
+  trainId: number;
+  trainNumber: number;
+  name: string;
+  seats: Seat[];
+}
 
 @Component({
   imports: [CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule],
@@ -15,13 +31,12 @@ import { ChangeDetectorRef } from '@angular/core';
   standalone: true
 })
 export class FormComponent implements OnInit {
-  selectedTrain: any;
+  selectedTrain: any = { vagons: [] };
   passengerCount: number = 1;
   passengersArray: any[] = [];
   activePassengerIndex: number | null = null;
   showVagons = false;
   selectedVagonIndex: number | null = null;
-  seatRows: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   @ViewChild('errorDiv') errorDiv!: ElementRef;
 
@@ -31,7 +46,7 @@ export class FormComponent implements OnInit {
     'ბიზნესი': 125
   };
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef) {
+  constructor(private router: Router, private cdr: ChangeDetectorRef, private http: HttpClient) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state as {
       selectedTrain: any,
@@ -40,7 +55,7 @@ export class FormComponent implements OnInit {
 
     if (state) {
       this.selectedTrain = state.selectedTrain;
-      this.passengerCount = state.passengerCount
+      this.passengerCount = state.passengerCount;
     }
   }
 
@@ -51,6 +66,29 @@ export class FormComponent implements OnInit {
       passportNumber: '',
       selectedSeat: { vagonIndex: null, seat: null, price: null },
     }));
+
+    this.loadVagons();
+  }
+
+  loadVagons() {
+    this.http.get<Vagon[]>('https://railway.stepprojects.ge/api/vagons').subscribe(
+      (vagonsData) => {
+        if (this.selectedTrain?.vagons) {
+          this.selectedTrain.vagons = this.selectedTrain.vagons.map((vagon: Vagon) => {
+            const matchingVagonData = vagonsData.find(
+              (vd) => vd.trainId === this.selectedTrain.id && vd.name === vagon.name
+            );
+            return matchingVagonData ? { ...vagon, seats: matchingVagonData.seats } : vagon;
+          });
+          console.log('Данные о вагонах загружены:', this.selectedTrain.vagons);
+        } else {
+          console.warn('Объект selectedTrain или его свойство vagons не определены.');
+        }
+      },
+      (error) => {
+        console.error('Ошибка при загрузке данных о вагонах:', error);
+      }
+    );
   }
 
   addRipple(event: MouseEvent) {
@@ -64,7 +102,6 @@ export class FormComponent implements OnInit {
 
   openVagons(index: number) {
     this.activePassengerIndex = index;
-    this.selectedVagonIndex = this.passengersArray[index].selectedSeat?.vagonIndex;
     this.showVagons = true;
   }
 
@@ -89,18 +126,15 @@ export class FormComponent implements OnInit {
     this.selectedVagonIndex = index;
   }
 
-  selectSeat(seat: string) {
-    if (this.isSeatTaken(seat)) return;
+  selectSeat(seat: Seat) {
+    if (seat.isOccupied) return;
 
     if (this.activePassengerIndex !== null && this.selectedVagonIndex !== null) {
-      const selectedVagonName = this.selectedTrain?.vagons[this.selectedVagonIndex]?.name;
-      const price = selectedVagonName ? this.vagonPrices[selectedVagonName] : null;
-
       const updatedPassenger = { ...this.passengersArray[this.activePassengerIndex] };
       updatedPassenger.selectedSeat = {
         vagonIndex: this.selectedVagonIndex,
-        seat: seat,
-        price: price
+        seat: seat.number,
+        price: seat.price
       };
       this.passengersArray = this.passengersArray.map((passenger, index) =>
         index === this.activePassengerIndex ? updatedPassenger : passenger
@@ -110,12 +144,12 @@ export class FormComponent implements OnInit {
     }
   }
 
-  isSeatTaken(seat: string): boolean {
+  isSeatTaken(seatNumber: string): boolean {
     return this.passengersArray.some(
       (p, idx) =>
         idx !== this.activePassengerIndex &&
         p.selectedSeat?.vagonIndex === this.selectedVagonIndex &&
-        p.selectedSeat?.seat === seat
+        p.selectedSeat?.seat === seatNumber
     );
   }
 
@@ -144,5 +178,35 @@ export class FormComponent implements OnInit {
       this.cdr.detectChanges();
       console.log('Form is invalid - adding show class');
     }
+  }
+
+  getSeatRows(seats: Seat[] | undefined): Seat[][] {
+    if (!seats || seats.length === 0) {
+      return [];
+    }
+
+    const columns: { [key: string]: Seat[] } = {
+      A: [],
+      B: [],
+      C: [],
+      D: []
+    };
+
+    seats.forEach(seat => {
+      const lastChar = seat.number.slice(-1).toUpperCase();
+      if (columns[lastChar]) {
+        columns[lastChar].push(seat);
+      }
+    });
+
+    const sortedColumns = Object.values(columns).map(column => {
+      return column.sort((a, b) => {
+        const numberA = parseInt(a.number.slice(0, -1), 10);
+        const numberB = parseInt(b.number.slice(0, -1), 10);
+        return numberA - numberB;
+      });
+    });
+
+    return sortedColumns;
   }
 }

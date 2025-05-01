@@ -1,427 +1,470 @@
-.topicSec{
-    height: 35vh;
-    background-color: #2840BF;
-    display: flex;
-    align-items: center;
-    color: white;
-    padding-left: 15%;
-    div{
-        margin-top: 5%;
-    }
+.topicSec {
+  height: 35vh;
+  background-color: #2840BF;
+  display: flex;
+  align-items: center;
+  color: white;
+  padding-left: 15%;
+  div {
+    margin-top: 5%;
+  }
 }
 
-.buyForm{
-    margin-top: 3%;
-    width: 100vw; 
-    display: flex;
-    justify-content: center; 
-    margin-bottom: 5vh;
-    gap: 20px; 
-    .formMain{
-        padding: 40px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-        width: 50%;
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-        .error {
-          color: red;
-          margin-bottom: 10px;
-          display: none;
-          transition: display 0.3s ease-in-out;
-        
-          &.show {
-            display: block;
-          }
-        }
-        form {
-          .vagons {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.47);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            .chooseVag{
-              border-radius: 10px;
-              background-color: white;
-              width: 50%;
-              height: auto;
-              z-index: 200;
-              display: flex;
-              align-items: center;
-              flex-direction: column;
-              gap: 5px;
-              padding-left: 15px;
-              padding-right: 15px;
-              color: black;
-              .seats {
-                padding-bottom: 20px;
-                margin-top: 20px;
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                align-items: center;
-              
-                .seat-row {
-                  display: flex;
-                  gap: 30px;
-                  align-items: center;
-                  justify-content: center;
-                }
-              
-                .seat-block {
-                  display: flex;
-                  gap: 10px;
-                }
-              
-                .seat-btn {
-                  background-color: #b2d235;
-                  border: none;
-                  width: 40px;
-                  height: 30px;
-                  border-radius: 6px;
-                  font-weight: bold;
-                  cursor: pointer;
-                  transition: 0.2s;
-              
-                  &:hover {
-                    background-color: #a0c22b;
-                  }
-                }
-                .selected-seat {
-                  background-color: #e74c3c !important;
-                  color: white;
-                }
+.buyForm {
+  margin-top: 3%;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5vh;
+  gap: 20px;
 
-                .taken-seat {
-                  background-color: gray !important;
-                  cursor: not-allowed;
-                }
-                
+  .formMain {
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    .error {
+      color: red;
+      margin-bottom: 10px;
+      display: none;
+      transition: display 0.3s ease-in-out;
+
+      &.show {
+        display: block;
+      }
+    }
+
+    form {
+      .vagons {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.47);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+
+        .chooseVag {
+          border-radius: 10px;
+          background-color: white;
+          width: 50%;
+          height: auto;
+          z-index: 200;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          gap: 5px;
+          padding-left: 15px;
+          padding-right: 15px;
+          color: black;
+
+          .seats {
+            padding-bottom: 20px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+          
+            .seat-buttons-container {
+              display: flex;
+              flex-direction: row; 
+              gap: 10px;
+            }
+          
+            .seat-row {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+              align-items: center;
+            }
+          
+            .seat-row:nth-child(2) {
+              margin-right: 60px;
+            }
+          
+            .seat-btn {
+              background-color: #b2d235;
+              border: none;
+              width: 40px;
+              height: 30px;
+              border-radius: 6px;
+              font-weight: bold;
+              cursor: pointer;
+              transition: 0.2s;
+          
+              &:hover {
+                background-color: #a0c22b;
               }
-              
-              
-              
-                .CloseBtn{
-                  width: 100%;
-                  display: flex;
-                  align-items: flex-start;
-                  justify-content: flex-end;
-                  .close-btn {
-                    margin-top: 10px;
-                    background: transparent;
-                    border: none;
-                    font-size: 24px;
-                    font-weight: bold;
-                    cursor: pointer;
-                    color: black;
-                    z-index: 999;
-                    transition: transform 0.2s ease;
-                    &:hover {
-                      transform: scale(1.2);
-                    }
-                  }
-                }
-              .allVags{
-                display: flex;
-                .vagon{
-                  width: 100%;
-                  height: 15%;
-                  opacity: 50%;
-                  &.selected {
-                    opacity: 1;
-                  }
-                  .vagon-name {
-                    margin-left: 100px;
-                    margin-bottom: 100px;
-                    background-color: #333;
-                    color: white;
-                    padding: 5px 10px;
-                    border-radius: 4px;
-                    white-space: nowrap;
-                    font-size: 14px;
-                    opacity: 0;
-                    transition: opacity 0.2s ease;
-                    pointer-events: none;
-                  }
-                  cursor: pointer;
-                  img{
-                    width: 100%;
-                  }
-                  &:hover{
-                    opacity: 100%;
-                    .vagon-name {
-                      opacity: 1;
-                    }
-                  }   
+            }
+          
+            .selected-seat {
+              background-color: #e74c3c !important;
+              color: white;
+            }
+          
+            .taken-seat {
+              background-color: gray !important;
+              cursor: not-allowed;
+            }
+          }
+
+          .CloseBtn {
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+
+            .close-btn {
+              margin-top: 10px;
+              background: transparent;
+              border: none;
+              font-size: 24px;
+              font-weight: bold;
+              cursor: pointer;
+              color: black;
+              z-index: 999;
+              transition: transform 0.2s ease;
+
+              &:hover {
+                transform: scale(1.2);
+              }
+            }
+          }
+
+          .allVags {
+            display: flex;
+
+            .vagon {
+              width: 100%;
+              height: 15%;
+              opacity: 50%;
+
+              &.selected {
+                opacity: 1;
+              }
+
+              .vagon-name {
+                margin-left: 100px;
+                margin-bottom: 100px;
+                background-color: #333;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 4px;
+                white-space: nowrap;
+                font-size: 14px;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+                pointer-events: none;
+              }
+
+              cursor: pointer;
+
+              img {
+                width: 100%;
+              }
+
+              &:hover {
+                opacity: 100%;
+
+                .vagon-name {
+                  opacity: 1;
                 }
               }
             }
           }
         }
-        
-        .includes{
-          margin-top: 20px;
+      }
+    }
+
+    .includes {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+
+      .mainIco {
+        display: flex;
+
+        .secondIco {
+          border: 1px solid #2841bf6f;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 30px;
-          .mainIco{
+          width: 10%;
+          height: 50px;
+          padding-left: 10px;
+          padding-right: 10px;
+          border-radius: 5px;
+          margin-right: 10px;
+        }
+      }
+
+      .Txtes {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 5px;
+        font-size: 15px;
+      }
+    }
+
+    .selectedTrain {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+      height: 100px;
+      background-color: #F4F6FC;
+      padding-left: 5px;
+      width: 100%;
+
+      > div:nth-child(1) {
+        margin-left: 10px;
+      }
+
+      > div:nth-child(2),
+      > div:nth-child(1) {
+        width: 40%;
+      }
+
+      > div:nth-child(3) {
+        border: none !important;
+        width: 10%;
+      }
+
+      div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-right: 1px dashed #E0E3F5;
+        width: 25%;
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .passengers {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+
+        .passenger {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+
+          .inputs {
+            width: 100%;
             display: flex;
-            .secondIco{
-              border: 1px solid #2841bf6f;
+            justify-content: center;
+
+            button {
+              position: relative;
+              background-color: #2E41B5;
+              color: white;
+              border: none;
+              padding: 10px 20px;
+              cursor: pointer;
+              border-radius: 4px;
+              overflow: hidden;
+              transition: 0.2s ease-in-out;
+
+              &:hover {
+                background-color: #3b4fd2;
+              }
+
+              &.ripple::after {
+                content: '';
+                position: absolute;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.6);
+                width: 0;
+                height: 0;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                pointer-events: none;
+                animation: ripple-animation 0.6s linear;
+              }
+
+              @keyframes ripple-animation {
+                0% {
+                  width: 0;
+                  height: 0;
+                  opacity: 1;
+                }
+
+                100% {
+                  width: 300px;
+                  height: 300px;
+                  opacity: 0;
+                }
+              }
+            }
+
+            input {
+              border: 1px solid rgb(146, 146, 146);
+              width: 25%;
+              padding: 15px;
+              outline: none;
+              border-radius: 5px;
+              display: flex;
+            }
+
+            div {
               display: flex;
               align-items: center;
               justify-content: center;
-              width: 10%;
-              height: 50px;
-              padding-left: 10px;
-              padding-right: 10px;
+              color: white;
+              cursor: pointer;
+              width: 90px;
+              background-color: #2840BF;
               border-radius: 5px;
-              margin-right: 10px;
-            }
-          }
-          .Txtes{
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            gap: 5px;
-            font-size: 15px;
-          }
-        }
-        .selectedTrain{
-            display: flex;
-            flex-direction: row;
-            gap: 30px;
-            height: 100px;
-            background-color: #F4F6FC;
-            padding-left: 5px;
-            width: 100%;
-            > div:nth-child(1){
-                margin-left: 10px;
-            }
 
-            > div:nth-child(2),
-            > div:nth-child(1) {
-                width: 40%;
+              p {
+                text-align: center;
+                margin: 0;
+                width: 100%;
               }
-            > div:nth-child(3) {
-              border: none !important;
-              width: 10%;
             }
+          }
+        }
+      }
 
-            div{
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                border-right: 1px dashed #E0E3F5;
-                width: 25%;
-            }
-        }
-        form{
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            .passengers{
-                margin-top: 30px;
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-                width: 100%;
-                .passenger{
-                    display: flex;
-                    flex-direction: column;
-                    gap: 10px;
-                    .inputs{
-                        width: 100%;
-                        display: flex;
-                        justify-content: center;
-                        button {
-                            position: relative;
-                            background-color: #2E41B5;
-                            color: white;
-                            border: none;
-                            padding: 10px 20px;
-                            cursor: pointer;
-                            border-radius: 4px;
-                            overflow: hidden;
-                            transition: 0.2s ease-in-out;
-                        
-                            &:hover {
-                              background-color: #3b4fd2;
-                            }
-                        
-                            &.ripple::after {
-                              content: '';
-                              position: absolute;
-                              border-radius: 50%;
-                              background-color: rgba(255, 255, 255, 0.6);
-                              width: 0;
-                              height: 0;
-                              top: 50%;
-                              left: 50%;
-                              transform: translate(-50%, -50%);
-                              pointer-events: none;
-                              animation: ripple-animation 0.6s linear;
-                            }
-                  
-                            @keyframes ripple-animation {
-                              0% {
-                                width: 0;
-                                height: 0;
-                                opacity: 1;
-                              }
-                              100% {
-                                width: 300px;
-                                height: 300px;
-                                opacity: 0;
-                              }
-                            }
-                          }
-                        input{
-                            border: 1px solid rgb(146, 146, 146);
-                            width: 25%;
-                            padding: 15px;
-                            outline: none;
-                            border-radius: 5px;
-                            display: flex;
-                        }
-                        div{
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            color: white;
-                            cursor: pointer;
-                            width: 90px;
-                            background-color: #2840BF;
-                            border-radius: 5px;
-                            p {
-                              text-align: center;
-                              margin: 0;
-                              width: 100%;
-                            }
-                        }
-                    }
-                }
-            }
-            .email{
-                margin-top: 40px;
-                padding-bottom: 25px;
-                width: 100%;
-                display: flex;
-                gap: 10px;
-                input{
-                    height: 35px;
-                    padding: 10px;
-                    padding-left: 15px;
-                    outline: none;
-                    border: 1px solid rgb(185, 185, 185);
-                    border-radius: 5px;
-                    width: 50%;
-                }
-            }
-        }
-    }
-    .line {
-        border-bottom: none;
-        height: 2px;
+      .email {
+        margin-top: 40px;
+        padding-bottom: 25px;
         width: 100%;
-        background-image: repeating-linear-gradient(
-          to right,
-          #D5DAF0,
-          #D5DAF0 5px,
-          transparent 10px,
-          transparent 15px
-        );
-      }
-
-      .invoice {
-        padding: 20px;
-        width: 15%;
-        background-color: #ffffff;
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-        height: 40%;
-        .seatPrice {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          flex-direction: column;
-          align-items: center;
-          div {
-            width: 85%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-          }
-          .smlLine{
-            margin-top: 10px;
-            margin-bottom: 20px;
-            width: 90%;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.335);
-          }
-        }
-        .total{
-          display: flex;
-          width: 86%;
-          align-items: center;
-          justify-content: space-between;
-          background-color: white;
-          border-top: 1px solid rgba(0, 0, 0, 0.335);
-          padding: 5px;
-        }
-        button {
-          position: relative;
-          background-color: #2E41B5;
-          color: white;
-          border: none;
-          padding: 10px 20px;
-          cursor: pointer;
-          border-radius: 4px;
-          overflow: hidden;
-          transition: 0.2s ease-in-out;
-      
-          &:hover {
-            background-color: #3b4fd2;
-          }
-      
-          &.ripple::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.6);
-            width: 0;
-            height: 0;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            animation: ripple-animation 0.6s linear;
-          }
+        gap: 10px;
 
-          @keyframes ripple-animation {
-            0% {
-              width: 0;
-              height: 0;
-              opacity: 1;
-            }
-            100% {
-              width: 300px;
-              height: 300px;
-              opacity: 0;
-            }
-          }
+        input {
+          height: 35px;
+          padding: 10px;
+          padding-left: 15px;
+          outline: none;
+          border: 1px solid rgb(185, 185, 185);
+          border-radius: 5px;
+          width: 50%;
         }
       }
+    }
+  }
+
+  .line {
+    border-bottom: none;
+    height: 2px;
+    width: 100%;
+    background-image: repeating-linear-gradient(
+      to right,
+      #D5DAF0,
+      #D5DAF0 5px,
+      transparent 10px,
+      transparent 15px
+    );
+  }
+
+  .invoice {
+    padding: 20px;
+    width: 15%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    height: 40%;
+
+    .seatPrice {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
+
+      div {
+        width: 85%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .smlLine {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        width: 90%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.335);
+      }
+    }
+
+    .total {
+      display: flex;
+      width: 86%;
+      align-items: center;
+      justify-content: space-between;
+      background-color: white;
+      border-top: 1px solid rgba(0, 0, 0, 0.335);
+      padding: 5px;
+    }
+
+    button {
+      position: relative;
+      background-color: #2E41B5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        background-color: #3b4fd2;
+      }
+
+      &.ripple::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.6);
+        width: 0;
+        height: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        animation: ripple-animation 0.6s linear;
+      }
+
+      @keyframes ripple-animation {
+        0% {
+          width: 0;
+          height: 0;
+          opacity: 1;
+        }
+
+        100% {
+          width: 300px;
+          height: 300px;
+          opacity: 0;
+        }
+      }
+    }
+  }
 }
