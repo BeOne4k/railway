@@ -23,6 +23,7 @@ interface Vagon {
   seats: Seat[];
 }
 
+
 @Component({
   imports: [CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule],
   selector: 'app-form',
@@ -38,13 +39,10 @@ export class FormComponent implements OnInit {
   showVagons = false;
   selectedVagonIndex: number | null = null;
 
-  @ViewChild('errorDiv') errorDiv!: ElementRef;
+  email: string = '';
+  phone: string = '';
 
-  vagonPrices: { [key: string]: number } = {
-    'II კლასი': 75,
-    'I კლასი': 35,
-    'ბიზნესი': 125
-  };
+  @ViewChild('errorDiv') errorDiv!: ElementRef;
 
   constructor(private router: Router, private cdr: ChangeDetectorRef, private http: HttpClient) {
     const navigation = this.router.getCurrentNavigation();
@@ -80,13 +78,13 @@ export class FormComponent implements OnInit {
             );
             return matchingVagonData ? { ...vagon, seats: matchingVagonData.seats } : vagon;
           });
-          console.log('Данные о вагонах загружены:', this.selectedTrain.vagons);
+          // console.log('error:', this.selectedTrain.vagons);
         } else {
-          console.warn('Объект selectedTrain или его свойство vagons не определены.');
+          console.warn('error.');
         }
       },
       (error) => {
-        console.error('Ошибка при загрузке данных о вагонах:', error);
+        console.error('error:', error);
       }
     );
   }
@@ -128,18 +126,19 @@ export class FormComponent implements OnInit {
 
   selectSeat(seat: Seat) {
     if (seat.isOccupied) return;
-
+  
     if (this.activePassengerIndex !== null && this.selectedVagonIndex !== null) {
       const updatedPassenger = { ...this.passengersArray[this.activePassengerIndex] };
       updatedPassenger.selectedSeat = {
         vagonIndex: this.selectedVagonIndex,
         seat: seat.number,
-        price: seat.price
+        price: seat.price,
+        seatId: seat.seatId
       };
       this.passengersArray = this.passengersArray.map((passenger, index) =>
         index === this.activePassengerIndex ? updatedPassenger : passenger
       );
-
+  
       this.cdr.detectChanges();
     }
   }
@@ -172,12 +171,61 @@ export class FormComponent implements OnInit {
     if (this.validateForm()) {
       this.errorDiv.nativeElement.classList.remove('show');
       console.log('Form is valid - removing show class');
-      alert('Form is valid! Proceeding to payment...');
+
+      const people = this.passengersArray.map(passenger => ({
+        seatId: passenger.selectedSeat?.seatId || null,
+        name: passenger.firstName,
+        surname: passenger.lastName,
+        idNumber: passenger.passportNumber,
+        status: 'adult',
+        payoutCompleted: true
+      }));
+
+      let formattedDate: string;
+      if (this.selectedTrain?.date && this.isValidDate(this.selectedTrain.date)) {
+        formattedDate = this.selectedTrain.date;
+      } else {
+        formattedDate = new Date().toISOString().split('T')[0];
+      }
+
+      const requestBody = {
+        trainId: this.selectedTrain?.id,
+        date: formattedDate,
+        email: this.email,
+        phoneNumber: this.phone,
+        people: people
+      };
+
+      console.log('Request Body (Success Response):', requestBody);
+
+      this.http.post('https://railway.stepprojects.ge/api/tickets/register', requestBody, { responseType: 'text' })
+        .subscribe(
+          (response) => {
+            console.log('Registration successful:', response);
+          },
+          (error) => {
+            console.error('Registration failed:', error);
+            alert('Someting went wrong.');
+          }
+        );
+
     } else {
       this.errorDiv.nativeElement.classList.add('show');
       this.cdr.detectChanges();
       console.log('Form is invalid - adding show class');
     }
+  }
+
+  isValidDate(dateString: string): boolean {
+    return /^\d{4}-\d{2}-\d{2}$/.test(dateString);
+  }
+
+  isSeatTakenForOtherPassenger(seatNumber: string, vagonName: string): boolean {
+    return this.passengersArray.some(
+      (p) =>
+        p.selectedSeat?.seat === seatNumber &&
+        this.selectedTrain?.vagons[p.selectedSeat?.vagonIndex || -1]?.name === vagonName
+    );
   }
 
   getSeatRows(seats: Seat[] | undefined): Seat[][] {
