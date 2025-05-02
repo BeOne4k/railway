@@ -74,14 +74,48 @@
             gap: 30px;
             align-items: center;
             justify-content: center;
+            .wagon-layout{
+              .toilet{
+                width: 35%;
+                height: 40px;
+                background-color: rgb(187, 187, 187);
+                border: 5px solid rgb(133, 133, 133);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+              .toilet-bottom{
+                border-top: rgb(133, 133, 133);
+                margin-left: 61.5%;
+              }
+              .toilet-top{
+                border-bottom: rgb(133, 133, 133);
+              }
+            }
           
             .seat-buttons-container {
               display: flex;
-              flex-direction: row; 
+              flex-direction: row;
               gap: 10px;
+              border: 5px solid rgb(133, 133, 133);
+              padding: 10px;
+              position: relative;
+            
+              &::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 64px;
+                height: calc(100% + 10px);
+                background-color: white;
+                z-index: 1;
+              }
             }
           
             .seat-row {
+              
               display: flex;
               flex-direction: column;
               gap: 10px;

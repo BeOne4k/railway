@@ -94,21 +94,25 @@
             <h4 class="vagon-title">
               Selected Vagon: {{ selectedTrain?.vagons[selectedVagonIndex]?.name }}
             </h4>
-            <div class="seat-buttons-container">
-              <div class="seat-row" *ngFor="let row of getSeatRows(selectedTrain?.vagons[selectedVagonIndex]?.seats)">
-                <button
-                  class="seat-btn"
-                  *ngFor="let seat of row"
-                  [ngClass]="{
-                    'selected-seat': activePassengerIndex !== null && passengersArray[activePassengerIndex]?.selectedSeat?.vagonIndex === selectedVagonIndex && passengersArray[activePassengerIndex]?.selectedSeat?.seat === seat.number,
-                    'taken-seat': isSeatTaken(seat.number)
-                  }"
-                  [disabled]="isSeatTaken(seat.number)"
-                  (click)="selectSeat(seat)"
-                >
-                  {{ seat.number }}
-                </button>
+            <div class="wagon-layout">
+              <div class="toilet toilet-top">Toilet</div>
+              <div class="seat-buttons-container">
+                <div class="seat-row" *ngFor="let row of getSeatRows(selectedTrain?.vagons[selectedVagonIndex]?.seats)">
+                  <button
+                    class="seat-btn"
+                    *ngFor="let seat of row"
+                    [ngClass]="{
+                      'selected-seat': activePassengerIndex !== null && passengersArray[activePassengerIndex]?.selectedSeat?.vagonIndex === selectedVagonIndex && passengersArray[activePassengerIndex]?.selectedSeat?.seat === seat.number,
+                      'taken-seat': isSeatTaken(seat.number)
+                    }"
+                    [disabled]="isSeatTaken(seat.number)"
+                    (click)="selectSeat(seat)"
+                  >
+                    {{ seat.number }}
+                  </button>
+                </div>
               </div>
+              <div class="toilet toilet-bottom">Toilet</div>
             </div>
           </div>
         </div>
