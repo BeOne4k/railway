@@ -6,7 +6,6 @@
   
     <div class="order-summary">
       <p>Total Amount Due: <span class="total-price">₾{{ totalPrice ? totalPrice.toFixed(2) : '0.00' }}</span></p>
-      <p *ngIf="registrationResponse">Booking Reference: {{ getBookingReference(registrationResponse) }}</p>
     </div>
   
     <form class="payment-form">
