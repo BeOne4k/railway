@@ -1,0 +1,139 @@
+.topicCard{
+    background-color: #2840BF;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    color: white;
+    padding-left: 15%;
+    font-size: 30px;
+    padding-top: 5%;
+}
+
+.payment-container {
+    margin-top: 100px;
+    width: 50%;
+    margin: 30px auto;
+    margin-top: 3%;
+    margin-bottom: 5%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0px 10px #8397fd;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .order-summary {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 4px;
+  
+    p {
+      margin: 5px 0;
+      color: #555;
+    }
+  
+    .total-price {
+      font-weight: bold;
+      color: green;
+    }
+  }
+  
+  .payment-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+      font-weight: bold;
+    }
+  
+    input[type="text"],
+    input[type="email"] {
+      width: calc(100% - 12px);
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+  
+    input[type="text"]:focus,
+    input[type="email"]:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .half-width {
+    width: calc(50% - 5px);
+  }
+  
+  .pay-button {
+    position: relative;
+    background-color: #2E41B5;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: 0.2s ease-in-out;
+    width: 25%;
+    margin-left: 73.5%;
+
+    &:hover {
+      background-color: #3b4fd2;
+    }
+
+    &.ripple::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.6);
+      width: 0;
+      height: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: ripple-animation 0.6s linear;
+    }
+
+    @keyframes ripple-animation {
+      0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+      }
+
+      100% {
+        width: 300px;
+        height: 300px;
+        opacity: 0;
+      }
+    }
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }

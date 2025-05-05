@@ -152,12 +152,6 @@ export class FormComponent implements OnInit {
     );
   }
 
-  calculateTotal(): number {
-    return this.passengersArray.reduce((total, passenger) => {
-      return total + (passenger.selectedSeat?.price || 0);
-    }, 0);
-  }
-
   validateForm(): boolean {
     const isValid = this.passengersArray.every(
       passenger =>
@@ -202,10 +196,17 @@ export class FormComponent implements OnInit {
         .subscribe(
           (response) => {
             console.log('Registration successful:', response);
+
+            this.router.navigate(['form-card'], {
+              state: {
+                registrationResponse: response,
+                totalPrice: this.calculateTotal()
+              }
+            });
           },
           (error) => {
             console.error('Registration failed:', error);
-            alert('Someting went wrong.');
+            alert('Something went wrong.');
           }
         );
 
@@ -214,6 +215,12 @@ export class FormComponent implements OnInit {
       this.cdr.detectChanges();
       console.log('Form is invalid - adding show class');
     }
+  }
+
+  calculateTotal(): number {
+    return this.passengersArray.reduce((total, passenger) => {
+      return total + (passenger.selectedSeat?.price || 0);
+    }, 0);
   }
 
   isValidDate(dateString: string): boolean {
