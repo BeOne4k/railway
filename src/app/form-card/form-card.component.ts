@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form-card',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './form-card.component.html',
   styleUrls: ['./form-card.component.scss']
 })
