@@ -3,33 +3,68 @@
 </section>
 
 <div class="payment-container">
-  
-    <div class="order-summary">
-      <p>Total Amount Due: <span class="total-price">₾{{ totalPrice ? totalPrice.toFixed(2) : '0.00' }}</span></p>
-    </div>
-  
-    <form class="payment-form">
-      <div class="form-group">
-        <label for="cardNumber">Card Number*</label>
-        <input type="text" id="cardNumber" name="cardNumber" placeholder="XXXX XXXX XXXX XXXX" required>
-      </div>
-  
-      <div class="form-row">
-        <div class="form-group half-width">
-          <label for="expiryDate">Expiry Date*</label>
-          <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
-        </div>
-        <div class="form-group half-width">
-          <label for="cvc">CVC/CVV*</label>
-          <input type="text" id="cvc" name="cvc" placeholder="XXX" required>
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="cardholderName">Cardholder Name</label>
-        <input type="text" id="cardholderName" name="cardholderName" placeholder="J. Smith">
-      </div>
-  
-      <button type="submit" class="pay-button" (mouseover)="addRipple($event)">Pay Now</button>
-    </form>
+
+  <div class="order-summary">
+    <p>Total Amount Due: <span class="total-price">₾{{ totalPrice ? totalPrice.toFixed(2) : '0.00' }}</span></p>
   </div>
+
+  <form class="payment-form" [formGroup]="paymentForm" (ngSubmit)="submitPayment()">
+    <div class="form-group">
+      <label for="cardNumber">Card Number*</label>
+      <input
+      type="text"
+      id="cardNumber"
+      name="cardNumber"
+      placeholder="XXXX XXXX XXXX XXXX"
+      formControlName="cardNumber"
+      (input)="formatCardNumber($event)"
+      maxlength="19" >
+    <div *ngIf="paymentForm.get('cardNumber')?.invalid && (paymentForm.get('cardNumber')?.dirty || paymentForm.get('cardNumber')?.touched)">
+      <div *ngIf="paymentForm.get('cardNumber')?.errors?.['required']" style="color: #2840BF;">Card number is required.</div>
+      <div *ngIf="paymentForm.get('cardNumber')?.errors?.['pattern']" style="color: red;">Please enter a valid 16-digit card number.</div>
+    </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group half-width">
+        <label for="expiryDate">Expiry Date*</label>
+        <input
+          type="text"
+          id="expiryDate"
+          name="expiryDate"
+          placeholder="MM/YY"
+          formControlName="expiryDate"
+          (input)="formatExpiryDate($event)"
+          maxlength="5"
+        >
+        <div *ngIf="paymentForm.get('expiryDate')?.invalid && (paymentForm.get('expiryDate')?.dirty || paymentForm.get('expiryDate')?.touched)">
+          <div *ngIf="paymentForm.get('expiryDate')?.errors?.['required']" style="color: #2840BF">Expiry date is required.</div>
+          <div *ngIf="paymentForm.get('expiryDate')?.errors?.['pattern']" style="color: red;">Please enter a valid expiry date (MM/YY).</div>
+        </div>
+      </div>
+      <div class="form-group half-width">
+        <label for="cvc">CVC/CVV*</label>
+        <input
+          type="text"
+          id="cvc"
+          name="cvc"
+          placeholder="XXX"
+          formControlName="cvc"
+          (input)="formatCvc($event)"
+          maxlength="3"
+        >
+        <div *ngIf="paymentForm.get('cvc')?.invalid && (paymentForm.get('cvc')?.dirty || paymentForm.get('cvc')?.touched)">
+          <div *ngIf="paymentForm.get('cvc')?.errors?.['required']" style="color: #2840BF">CVC/CVV is required.</div>
+          <div *ngIf="paymentForm.get('cvc')?.errors?.['pattern']" style="color: red;">Please enter a valid 3-digit CVC/CVV.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cardholderName">Cardholder Name</label>
+      <input type="text" id="cardholderName" name="cardholderName" placeholder="J. Smith" formControlName="cardholderName">
+    </div>
+
+    <button type="submit" class="pay-button" (mouseover)="addRipple($event)">Pay Now</button>
+  </form>
+</div>
