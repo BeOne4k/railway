@@ -8,3 +8,169 @@
     font-size: 30px;
     padding-top: 5%;
 }
+
+.ticket-container {
+    width: 50%;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    padding: 20px;
+    font-family: sans-serif;
+    font-size: 14px;
+  
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+  
+      .logo {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #333;
+      }
+  
+      .details {
+        text-align: center;
+        p {
+          margin: 5px 0;
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+  
+      .logo-right {
+        img {
+          max-width: 100px;
+          height: auto;
+        }
+      }
+    }
+  
+    .trip-info {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+      padding: 10px 0;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+  
+      .departure, .arrival, .date {
+        text-align: center;
+        .label {
+          color: #777;
+          margin-bottom: 5px;
+        }
+        .location, .value {
+          font-weight: bold;
+          font-size: 1.1em;
+        }
+        .location span {
+          font-size: 0.9em;
+          font-weight: normal;
+        }
+      }
+    }
+  
+    .contact-info {
+      margin-bottom: 20px;
+      .label {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        p {
+          margin: 5px 0;
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  
+    .passenger-info {
+      margin-bottom: 20px;
+      .label {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .passenger-table {
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid #ccc;
+  
+        .table-header {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          padding: 8px 0;
+          font-weight: bold;
+          color: #555;
+          border-bottom: 1px solid #eee;
+        }
+  
+        .table-row {
+          display: flex;
+          flex-direction: column;
+          padding: 8px 0;
+          border-bottom: 1px solid #eee;
+        }
+  
+        span {
+          padding-right: 10px;
+        }
+      }
+    }
+  
+    .payment-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+  
+      .payment-details {
+        .label {
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+        p {
+          margin: 3px 0;
+        }
+      }
+  
+      .total-price {
+        text-align: right;
+        .label {
+          font-weight: bold;
+          font-size: 1.1em;
+          margin-bottom: 5px;
+        }
+        .price {
+          font-size: 1.8em;
+          font-weight: bold;
+          color: #2840BF;
+          span {
+            font-size: 0.8em;
+            font-weight: normal;
+          }
+        }
+      }
+    }
+  
+    .disclaimer {
+      text-align: center;
+      color: #777;
+      font-size: 0.9em;
+      margin-top: 20px;
+      p {
+        margin: 3px 0;
+      }
+      p:last-child {
+        font-weight: bold;
+        color: red;
+      }
+    }
+  }

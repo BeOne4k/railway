@@ -1,4 +1,78 @@
 <section class="topicPDF">
-    <h1>Your Ticket</h1>
+  <h1>Your Ticket</h1>
 </section>
 
+<div class="ticket-container" *ngIf="!loading && ticketData">
+  <div class="header">
+    <div class="logo">
+      <span>Step Railway</span>
+    </div>
+    <div class="details">
+      <p>Ticket Code: <span>{{ ticketData.id }}</span></p>
+      <p>Issue Date: <span>5-8-2025</span></p>
+    </div>
+    <div class="logo-right">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQliJsyFLWC1G6BBX5W3_fRhGtlfNuS-UtdRg&s" alt="Logo">
+    </div>
+  </div>
+
+  <div class="trip-info">
+    <div class="departure">
+      <p class="label">Departure:</p>
+      <p class="location">{{ fromLocation }} <span>at {{ departureTime }}</span></p>
+    </div>
+    <div class="arrival">
+      <p class="label">Arrival:</p>
+      <p class="location">{{ toLocation }} <span>at {{ arrivalTime }}</span></p>
+    </div>
+    <div class="date">
+      <p class="label">Departure Date:</p>
+      <p class="value">{{ ticketData.date }}</p>
+    </div>
+  </div>
+
+  <div class="contact-info">
+    <p class="label">Contact Information:</p>
+    <div class="info-row">
+      <p>Email: <span>{{ ticketData.email }}</span></p>
+      <p>Phone: <span>{{ ticketData.phone }}</span></p>
+    </div>
+  </div>
+
+  <div class="passenger-info">
+    <p class="label">Passengers</p>
+    <div class="passenger-table">
+      <div class="table-row" *ngFor="let person of ticketData.persons; let i = index">
+        <span>Name: {{ person.name }}</span>
+        <span>Surname: {{ person.surname }}</span>
+        <span>ID Number: {{ person.idNumber }}</span>
+        <span>Seat: {{ selectedSeatsInfo[i]?.seat ? selectedSeatsInfo[i].seat.slice(0, -1) : '-' }}{{ selectedSeatsInfo[i]?.seat ? selectedSeatsInfo[i].seat.slice(-1) : '' }}</span>
+        <span>Vagon №: {{ selectedSeatsInfo[i]?.vagonIndex !== null ? selectedSeatsInfo[i].vagonIndex + 1 : '-' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="payment-info">
+    <div class="payment-details">
+      <p class="label">Payment info:</p>
+      <p>Credit Card - **** **** **** {{ lastFourCardDigits }}</p>
+    </div>
+    <div class="total-price">
+      <p class="label">Total Paid</p>
+      <p class="price">{{ ticketData.ticketPrice }} <span>₾</span></p>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <p>Information is computer-generated and valid without print and signature.</p>
+    <p>Please check your data to identify the ticket number.</p>
+  </div>
+</div>
+
+<div *ngIf="loading">
+  <p>Loading ticket information...</p>
+</div>
+
+<div *ngIf="error">
+  <p style="color: red;">{{ error }}</p>
+</div>

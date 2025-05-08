@@ -3,6 +3,19 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
+interface TrainDetails {
+  arrive: string;
+  date: string;
+  departure: string;
+  departureId: number;
+  from: string;
+  id: number;
+  name: string;
+  number: number;
+  to: string;
+  vagons: any[];
+}
+
 @Component({
   selector: 'app-form-card',
   standalone: true,
@@ -14,6 +27,8 @@ export class FormCardComponent implements OnInit {
   paymentForm: FormGroup;
   registrationResponse: any;
   totalPrice: number | null = null;
+  trainDetails: TrainDetails | null = null;
+  selectedSeats: any[] = [];
 
   constructor(
     private router: Router,
@@ -22,7 +37,10 @@ export class FormCardComponent implements OnInit {
     const navigation = this.router.getCurrentNavigation();
     this.registrationResponse = navigation?.extras?.state?.['registrationResponse'];
     this.totalPrice = navigation?.extras?.state?.['totalPrice'];
-
+    this.trainDetails = navigation?.extras?.state?.['trainDetails'];
+    this.selectedSeats = navigation?.extras?.state?.['selectedSeats'] || [];
+    console.log('Selected Seats in FormCard:', this.selectedSeats);
+    console.log('Train Details in FormCard:', this.trainDetails);
     this.paymentForm = this.fb.group({
       cardNumber: ['', [Validators.required, Validators.pattern(/^\d{16}$/)]],
       expiryDate: ['', [Validators.required, Validators.pattern(/^\d{2}\/\d{2}$/)]],
@@ -92,6 +110,9 @@ export class FormCardComponent implements OnInit {
       const responseText: string = this.registrationResponse;
       const ticketNumberPrefix = 'ბილეთის ნომერია:';
       const startIndex = responseText.indexOf(ticketNumberPrefix);
+      const cardNumber = this.paymentForm.get('cardNumber')?.value.replace(/\s/g, '');
+      const lastFourDigits = cardNumber.slice(-4);
+      console.log('Last Four Digits in submitPayment:', lastFourDigits);
 
       let bookingReference: string | null = null;
       if (startIndex !== -1) {
@@ -99,9 +120,21 @@ export class FormCardComponent implements OnInit {
       }
 
       if (bookingReference) {
-        this.router.navigate(['/pdf'], { queryParams: { ticket: bookingReference } });
+        this.router.navigate(['/pdf'], {
+          queryParams: {
+            ticket: bookingReference,
+            departureTime: this.trainDetails?.departure,
+            arrivalTime: this.trainDetails?.arrive,
+            departureDate: this.trainDetails?.date,
+            fromLocation: this.trainDetails?.from,
+            toLocation: this.trainDetails?.to,
+            trainNumber: this.trainDetails?.number,
+            selectedSeats: JSON.stringify(this.selectedSeats),
+            lastFourCardDigits: lastFourDigits
+          }
+        });
       } else {
-        console.error('ვერ მოხერხდა ბილეთის ნომრის ამოღება.');
+        console.error('Не удалось получить номер билета.');
       }
     } else {
       this.markFormGroupTouched(this.paymentForm);

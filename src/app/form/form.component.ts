@@ -182,6 +182,9 @@ export class FormComponent implements OnInit {
         formattedDate = new Date().toISOString().split('T')[0];
       }
 
+      const selectedSeatsInfo = this.passengersArray.map(passenger => passenger.selectedSeat);
+      console.log('Selected Seats Info in FormComponent:', selectedSeatsInfo);
+
       const requestBody = {
         trainId: this.selectedTrain?.id,
         date: formattedDate,
@@ -200,7 +203,10 @@ export class FormComponent implements OnInit {
             this.router.navigate(['form-card'], {
               state: {
                 registrationResponse: response,
-                totalPrice: this.calculateTotal()
+                totalPrice: this.calculateTotal(),
+                trainDetails: this.selectedTrain,
+                phoneNumber: this.phone,
+                selectedSeats: selectedSeatsInfo
               }
             });
           },
