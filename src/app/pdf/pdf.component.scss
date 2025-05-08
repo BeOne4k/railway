@@ -174,3 +174,52 @@
       }
     }
   }
+
+  .download-button{
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    button {
+      position: relative;
+      background-color: #2E41B5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: 0.2s ease-in-out;
+  
+      &:hover {
+        background-color: #3b4fd2;
+      }
+  
+      &.ripple::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.6);
+        width: 0;
+        height: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        animation: ripple-animation 0.6s linear;
+      }
+
+      @keyframes ripple-animation {
+        0% {
+          width: 0;
+          height: 0;
+          opacity: 1;
+        }
+        100% {
+          width: 300px;
+          height: 300px;
+          opacity: 0;
+        }
+      }
+    }
+  }

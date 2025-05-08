@@ -69,6 +69,10 @@
   </div>
 </div>
 
+<div class="download-button" *ngIf="pdfSrc">
+  <button (click)="downloadPdf()" (mouseover)="addRipple($event)">Download PDF</button>
+</div>
+
 <div *ngIf="loading">
   <p>Loading ticket information...</p>
 </div>
