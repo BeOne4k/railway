@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -36,7 +36,8 @@ interface TicketData {
 })
 export class PdfComponent implements OnInit {
   pdfSrc: SafeResourceUrl | null = null;
-  private pdfBlobUrl: string | null = null; // Для хранения небезопасного URL
+  private pdfBlobUrl: string | null = null;
+  private pdfBlob: Blob | null = null; // Объявите свойство pdfBlob
 
   lastFourCardDigits: string | null = null;
   ticketNumber: string | null = null;
@@ -55,7 +56,8 @@ export class PdfComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -172,7 +174,7 @@ export class PdfComponent implements OnInit {
       ],
       styles: {
         logo: {
-          fontSize: 1.5 * 14, 
+          fontSize: 1.5 * 14,
           bold: true,
           color: '#333',
           margin: [0, 0, 0, 10]
@@ -241,6 +243,7 @@ export class PdfComponent implements OnInit {
     };
 
     (pdfMake as any).createPdf(documentDefinition).getBlob((blob: Blob) => {
+      this.pdfBlob = blob;
       this.pdfBlobUrl = URL.createObjectURL(blob);
       this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfBlobUrl);
       console.log('PDF URL:', this.pdfSrc);
@@ -248,14 +251,40 @@ export class PdfComponent implements OnInit {
     });
   }
 
+  printPdf(): void {
+    if (!this.pdfBlobUrl) {
+      console.warn('PDF Blob URL is not available.');
+      return;
+    }
+  
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = this.pdfBlobUrl;
+  
+    iframe.onload = () => {
+      setTimeout(() => {
+        iframe.contentWindow?.focus();
+        iframe.contentWindow?.print();
+      }, 500);
+    };
+  
+    document.body.appendChild(iframe);
+  }
+  
+  
+
   downloadPdf(): void {
-    if (this.pdfBlobUrl) {
+    if (this.pdfBlob) {
+      const url = URL.createObjectURL(this.pdfBlob);
       const link = document.createElement('a');
-      link.href = this.pdfBlobUrl;
+      link.href = url;
       link.download = 'ticket.pdf';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } else {
+      console.warn('PDF Blob не доступен для скачивания.');
     }
   }
 

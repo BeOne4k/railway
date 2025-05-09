@@ -175,11 +175,16 @@
     }
   }
 
-  .download-button{
-    width: 100vw;
+  .button-container{
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100vw;
+    gap: 20%;
+    margin-bottom: 10%;
+  }
+
+  .download-button, .print-button{
     button {
       position: relative;
       background-color: #2E41B5;
@@ -221,5 +226,59 @@
           opacity: 0;
         }
       }
+    }
+  }
+
+  @media (max-width: 900px) {
+    .topicPDF {
+      font-size: 18px;
+      padding-left: 3%;
+      padding-right: 3%;
+    }
+  
+    .ticket-container {
+      font-size: 10px;
+  
+      .header {
+        .logo {
+          font-size: 1.2em;
+        }
+        .logo-right {
+          img {
+            max-width: 60px;
+          }
+        }
+      }
+  
+      .trip-info {
+        .location, .value {
+          font-size: 0.9em;
+        }
+        .location span {
+          font-size: 0.7em;
+        }
+      }
+  
+      .passenger-info {
+        .table-header, .table-row {
+          font-size: 0.8em;
+          grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+        }
+      }
+  
+      .payment-info {
+        .total-price .price {
+          font-size: 1.2em;
+        }
+      }
+    }
+  
+    .button-container {
+      gap: 8px;
+    }
+  
+    .download-button button, .print-button button {
+      font-size: 0.8em;
+      padding: 6px 12px;
     }
   }
