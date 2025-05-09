@@ -2,7 +2,7 @@
   <h1>Your Ticket</h1>
 </section>
 
-<div class="ticket-container" *ngIf="!loading && ticketData">
+<div class="ticket-container" #ticketContainer *ngIf="!loading && ticketData">
   <div class="header">
     <div class="logo">
       <span>Step Railway</span>
@@ -69,11 +69,11 @@
   </div>
 </div>
 
-<div class="button-container" *ngIf="ticketData">
+<div class="button-container">
   <div class="print-button">
     <button (click)="printPdf()" (mouseover)="addRipple($event)">Print Ticket</button>
   </div>
-  <div class="download-button" *ngIf="pdfSrc">
+  <div class="download-button">
     <button (click)="downloadPdf()" (mouseover)="addRipple($event)">Download PDF</button>
   </div>
 </div>

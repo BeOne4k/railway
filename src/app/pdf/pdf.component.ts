@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import pdfMake from 'pdfmake/build/pdfmake';
-import { vfs } from 'pdfmake/build/vfs_fonts';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 interface TicketData {
   id: string;
@@ -35,10 +35,6 @@ interface TicketData {
   styleUrl: './pdf.component.scss'
 })
 export class PdfComponent implements OnInit {
-  pdfSrc: SafeResourceUrl | null = null;
-  private pdfBlobUrl: string | null = null;
-  private pdfBlob: Blob | null = null; // Объявите свойство pdfBlob
-
   lastFourCardDigits: string | null = null;
   ticketNumber: string | null = null;
   ticketData: TicketData | null = null;
@@ -52,6 +48,8 @@ export class PdfComponent implements OnInit {
   trainNumber: string | null = null;
   selectedSeatsInfo: any[] = [];
 
+  @ViewChild('ticketContainer') ticketContainerRef!: ElementRef;
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -61,8 +59,6 @@ export class PdfComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    (pdfMake as any).vfs = vfs;
-
     this.ticketNumber = this.route.snapshot.queryParamMap.get('ticket');
     this.departureTime = this.route.snapshot.queryParamMap.get('departureTime');
     this.arrivalTime = this.route.snapshot.queryParamMap.get('arrivalTime');
@@ -89,7 +85,6 @@ export class PdfComponent implements OnInit {
       next: (data) => {
         this.ticketData = data;
         this.loading = false;
-        this.generatePdf();
         this.cdr.detectChanges();
       },
       error: () => {
@@ -100,192 +95,42 @@ export class PdfComponent implements OnInit {
     });
   }
 
-  generatePdf(): void {
-    if (!this.ticketData) return;
+  printPdf(): void {
+    const elementToCapture = this.ticketContainerRef.nativeElement;
 
-    console.log('Generating PDF...');
+    html2canvas(elementToCapture).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-    const documentDefinition = {
-      content: [
-        { text: 'Step Railway', style: 'logo' },
-        {
-          columns: [
-            { text: `Ticket Code: ${this.ticketData.id}`, style: 'details' },
-            { text: `Issue Date: 5-8-2025`, style: 'details', alignment: 'right' }
-          ],
-          margin: [0, 0, 0, 20]
-        },
-        {
-          columns: [
-            { text: 'Departure:', style: 'label' },
-            { text: `${this.fromLocation} at ${this.departureTime}`, style: 'location' },
-            { text: 'Arrival:', style: 'label', alignment: 'right' },
-            { text: `${this.toLocation} at ${this.arrivalTime}`, style: 'location', alignment: 'right' }
-          ],
-          margin: [0, 0, 0, 10]
-        },
-        { text: 'Departure Date:', style: 'label' },
-        { text: this.ticketData.date, style: 'value', margin: [0, 0, 0, 10] },
-        { text: 'Contact Information:', style: 'label' },
-        {
-          columns: [
-            { text: `Email: ${this.ticketData.email}`, style: 'infoRow' },
-            { text: `Phone: ${this.ticketData.phone}`, style: 'infoRow', alignment: 'right' }
-          ],
-          margin: [0, 0, 0, 20]
-        },
-        { text: 'Passengers', style: 'passengerLabel' },
-        this.ticketData.persons.map((person, index) => ({
-          columns: [
-            { text: `Name: ${person.name}`, style: 'passengerInfo' },
-            { text: `Surname: ${person.surname}`, style: 'passengerInfo' },
-            { text: `ID Number: ${person.idNumber}`, style: 'passengerInfo' },
-            {
-              text: `Seat: ${
-                this.selectedSeatsInfo[index]?.seat
-                  ? this.selectedSeatsInfo[index].seat.slice(0, -1) +
-                    this.selectedSeatsInfo[index].seat.slice(-1)
-                  : '-'
-              }`,
-              style: 'passengerInfo'
-            },
-            {
-              text: `Vagon №: ${
-                this.selectedSeatsInfo[index]?.vagonIndex !== null
-                  ? this.selectedSeatsInfo[index].vagonIndex + 1
-                  : '-'
-              }`,
-              style: 'passengerInfo'
-            }
-          ],
-          margin: [0, 0, 0, 5]
-        })),
-        { text: 'Payment info:', style: 'paymentLabel', margin: [0, 15, 0, 5] },
-        { text: `Credit Card - **** **** **** ${this.lastFourCardDigits}`, style: 'paymentDetails' },
-        {
-          columns: [
-            { text: 'Total Paid', style: 'totalLabel' },
-            { text: `${this.ticketData.ticketPrice} ₾`, style: 'totalPrice', alignment: 'right' }
-          ],
-          margin: [0, 15, 0, 10]
-        },
-        { text: 'Information is computer-generated and valid without print and signature.', style: 'disclaimer' },
-        { text: 'Please check your data to identify the ticket number.', style: 'disclaimerBold' }
-      ],
-      styles: {
-        logo: {
-          fontSize: 1.5 * 14,
-          bold: true,
-          color: '#333',
-          margin: [0, 0, 0, 10]
-        },
-        details: {
-          fontSize: 14,
-          color: '#333'
-        },
-        label: {
-          color: '#777',
-          fontSize: 14
-        },
-        location: {
-          fontSize: 1.1 * 14,
-          bold: true
-        },
-        value: {
-          fontSize: 1.1 * 14,
-          bold: true
-        },
-        infoRow: {
-          fontSize: 14
-        },
-        passengerLabel: {
-          fontSize: 14,
-          bold: true,
-          margin: [0, 10, 0, 5]
-        },
-        passengerInfo: {
-          fontSize: 14
-        },
-        paymentLabel: {
-          fontSize: 14,
-          bold: true
-        },
-        paymentDetails: {
-          fontSize: 14
-        },
-        totalLabel: {
-          fontSize: 1.1 * 14,
-          bold: true
-        },
-        totalPrice: {
-          fontSize: 1.8 * 14,
-          bold: true,
-          color: '#2840BF'
-        },
-        disclaimer: {
-          color: '#777',
-          fontSize: 0.9 * 14,
-          alignment: 'center',
-          margin: [0, 10, 0, 5]
-        },
-        disclaimerBold: {
-          color: 'red',
-          fontSize: 0.9 * 14,
-          bold: true,
-          alignment: 'center'
-        }
-      },
-      defaultStyle: {
-        fontSize: 14,
-        font: 'Roboto'
-      },
-      pageMargins: [40, 60, 40, 60]
-    };
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-    (pdfMake as any).createPdf(documentDefinition).getBlob((blob: Blob) => {
-      this.pdfBlob = blob;
-      this.pdfBlobUrl = URL.createObjectURL(blob);
-      this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfBlobUrl);
-      console.log('PDF URL:', this.pdfSrc);
-      this.cdr.detectChanges();
+      // Задержка перед открытием новой вкладки (в миллисекундах)
+      setTimeout(() => {
+        window.open(pdf.output('bloburl'), '_blank');
+      }, 500); // Например, задержка в 500 миллисекунд
+    }).catch(error => {
+      console.error('Ошибка при создании canvas:', error);
     });
   }
 
-  printPdf(): void {
-    if (!this.pdfBlobUrl) {
-      console.warn('PDF Blob URL is not available.');
-      return;
-    }
-  
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = this.pdfBlobUrl;
-  
-    iframe.onload = () => {
-      setTimeout(() => {
-        iframe.contentWindow?.focus();
-        iframe.contentWindow?.print();
-      }, 500);
-    };
-  
-    document.body.appendChild(iframe);
-  }
-  
-  
-
   downloadPdf(): void {
-    if (this.pdfBlob) {
-      const url = URL.createObjectURL(this.pdfBlob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'ticket.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    } else {
-      console.warn('PDF Blob не доступен для скачивания.');
-    }
+    const elementToCapture = this.ticketContainerRef.nativeElement;
+
+    html2canvas(elementToCapture).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('ticket.pdf');
+    }).catch(error => {
+      console.error('Ошибка при создании canvas:', error);
+    });
   }
 
   addRipple(event: MouseEvent) {
