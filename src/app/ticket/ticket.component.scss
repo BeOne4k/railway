@@ -172,6 +172,13 @@
 
 @media (max-width: 1470px) {
 
+    .form-sec{
+    padding-top: 200px;
+    .dropDwns{
+      padding: 20px;
+    }
+  }
+
   .paraSec{
     .imgDiv{
       display: none;
@@ -190,6 +197,9 @@
 @media (max-width: 900px) {
   .form-sec{
     padding-top: 200px;
+    .dropDwns{
+      padding: 20px;
+    }
   }
 }
 
@@ -201,6 +211,21 @@
       margin-left: 20px;
     }
   }
+
+  .form-sec{
+    .textSide{
+      margin-left: 5%;
+    }
+  }
+}
+
+@media (max-width: 530px){
+    .form-sec{
+    .textSide{
+      margin-left: 20%;
+    }
+  }
+
 }
 
 @media (max-width: 460px) {

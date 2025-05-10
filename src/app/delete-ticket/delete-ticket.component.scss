@@ -17,9 +17,350 @@
     justify-content: center;
     align-items: center;
     margin-top: 5%;
+    margin-bottom: 20px;
     .tktFetch{
+              button {
+          position: relative;
+          background-color: #2E41B5;
+          color: white;
+          border: none;
+          padding: 9px 20px;
+          cursor: pointer;
+          border-radius: 4px;
+          overflow: hidden;
+          transition: 0.2s ease-in-out;
+      
+          &:hover {
+            background-color: #3b4fd2;
+          }
+      
+          &.ripple::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            width: 0;
+            height: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: ripple-animation 0.6s linear;
+          }
+
+          @keyframes ripple-animation {
+            0% {
+              width: 0;
+              height: 0;
+              opacity: 1;
+            }
+            100% {
+              width: 300px;
+              height: 300px;
+              opacity: 0;
+            }
+          }
+        }
         input{
-            width: 500px;
+            margin-right: 5px;
+            width: 60vw;
+            height: 30px;
+            border-radius: 5px;
+            border: 2px solid rgba(0, 34, 255, 0.5);
+            outline: none;
+            padding-left: 5px;
+            box-shadow: 0 0 15px rgba(0, 34, 255, 0.724);
         }
     }
 }
+
+.ticket-container {
+  width: 90%;
+  max-width: 700px;
+  min-width: 300px;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  padding: 20px;
+  font-family: sans-serif;
+  font-size: 14px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .details {
+      text-align: center;
+      p {
+        margin: 5px 0;
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .logo-right {
+      img {
+        max-width: 100px;
+        height: auto;
+      }
+    }
+  }
+
+  .trip-info {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+
+    .departure, .arrival, .date {
+      text-align: center;
+      .label {
+        color: #777;
+        margin-bottom: 5px;
+      }
+      .location, .value {
+        font-weight: bold;
+        font-size: 1.1em;
+      }
+      .location span {
+        font-size: 0.9em;
+        font-weight: normal;
+      }
+    }
+  }
+
+  .contact-info {
+    margin-bottom: 20px;
+    .label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      p {
+        margin: 5px 0;
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .passenger-info {
+    margin-bottom: 20px;
+    .label {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .passenger-table {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid #ccc;
+
+      .table-header {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        padding: 8px 0;
+        font-weight: bold;
+        color: #555;
+        border-bottom: 1px solid #eee;
+      }
+
+      .table-row {
+        display: flex;
+        flex-direction: column;
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      span {
+        padding-right: 10px;
+      }
+    }
+  }
+
+  .payment-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+
+    .payment-details {
+      .label {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      p {
+        margin: 3px 0;
+      }
+    }
+
+    .total-price {
+      text-align: right;
+      .label {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 5px;
+      }
+      .price {
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #2840BF;
+        span {
+          font-size: 0.8em;
+          font-weight: normal;
+        }
+      }
+    }
+  }
+
+  .disclaimer {
+    text-align: center;
+    color: #777;
+    font-size: 0.9em;
+    margin-top: 20px;
+    p {
+      margin: 3px 0;
+    }
+    p:last-child {
+      font-weight: bold;
+      color: red;
+    }
+  }
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.deleteButton{
+  margin-bottom: 20px;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+                button {
+          position: relative;
+          background-color: #ff0000;
+          color: white;
+          border: none;
+          padding: 9px 20px;
+          cursor: pointer;
+          border-radius: 4px;
+          overflow: hidden;
+          transition: 0.2s ease-in-out;
+      
+          &:hover {
+            background-color: #d23b3b;
+          }
+      
+          &.ripple::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            width: 0;
+            height: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: ripple-animation 0.6s linear;
+          }
+
+          @keyframes ripple-animation {
+            0% {
+              width: 0;
+              height: 0;
+              opacity: 1;
+            }
+            100% {
+              width: 300px;
+              height: 300px;
+              opacity: 0;
+            }
+          }
+        }
+}
+
+.success-message {
+  width: 95vw;
+  color: #2e7d32;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-weight: 500;
+  font-size: 16px;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+
+
+.succss{
+  width: 22px;
+  height: 22px;
+  background-color: #2e7d32;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin-right: 5px;
+  .icon-check {
+  padding: 1px;
+  border-radius: 10px;
+  width: 15px;
+
+  path {
+    fill: #ffffff;
+  }
+}
+}
+
+
+@media (max-width: 768px) {
+  .ticket-container {
+    zoom: 0.9;
+  }
+  .topicDelete {
+  div {
+    margin-top: 20%;
+  }
+}
+}
+
+@media (max-width: 600px) {
+  .ticket-container {
+    zoom: 0.8;
+  }
+}
+
+@media (max-width: 450px) {
+  .ticket-container {
+    zoom: 0.7;
+  }
+}
+

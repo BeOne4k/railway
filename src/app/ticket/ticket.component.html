@@ -11,12 +11,12 @@
       <form action="">
           <select name="from" id="from" [(ngModel)]="fromStation">
             <option value="" disabled selected>From</option>
-            <option *ngFor="let station of stations" [value]="station.name">{{ station.name}}</option>
+            <option *ngFor="let station of stations" [value]="station.name" [disabled]="station.name === toStation">{{ station.name}}</option>
           </select>
           
           <select name="to" id="to" [(ngModel)]="toStation">
             <option value="" disabled selected>To</option>
-            <option *ngFor="let station of stations" [value]="station.name">{{ station.name}}</option>
+            <option *ngFor="let station of stations" [value]="station.name" [disabled]="station.name === fromStation">{{ station.name}}</option>
           </select>
 
           <mat-form-field class="calendar" appearance="fill">
