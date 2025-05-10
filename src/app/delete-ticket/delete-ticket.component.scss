@@ -1,0 +1,25 @@
+.topicDelete {
+  height: 35vh;
+  background-color: #2840BF;
+  display: flex;
+  align-items: center;
+  color: white;
+  padding-left: 15%;
+  font-size: 30px;
+  div {
+    margin-top: 5%;
+  }
+}
+
+.TktInfo{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+    .tktFetch{
+        input{
+            width: 500px;
+        }
+    }
+}

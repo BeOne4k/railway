@@ -41,4 +41,8 @@ export class HeaderComponent {
       header.style.backgroundColor = 'white';
     }
   }
+
+  GoToDelete() {
+    this.router.navigate(['/delete-ticket'])
+  }
 }
